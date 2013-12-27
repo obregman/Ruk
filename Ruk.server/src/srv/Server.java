@@ -7,6 +7,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import logic.Workspace;
+import scriptParsers.ApiScript;
 import srv.RESTServer;
 import commandHandlers.AddScriptCommandHandler;
 import commandHandlers.CHResult;
@@ -31,7 +32,7 @@ public class Server {
 	
 	public Server() {
 		_restSrv = new RESTServer(this);
-		_workspace = new Workspace();
+		_workspace = new Workspace(this);
 		
 		registerCommandHandlers();
 	}
@@ -91,6 +92,10 @@ public class Server {
 			channel.write(ByteBuffer.wrap(response.toString().getBytes()));
 			channel.close();
 		} catch(IOException ex) {}
+	}
+	
+	public void addApi(ApiScript apiScript) {
+		
 	}
 
 }

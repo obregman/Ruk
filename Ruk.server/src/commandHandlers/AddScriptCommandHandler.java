@@ -3,6 +3,7 @@ package commandHandlers;
 import java.nio.channels.SocketChannel;
 
 import scriptParsers.ApiScript;
+import scriptParsers.Script1;
 import srv.Server;
 
 public class AddScriptCommandHandler extends CommandHandlerBase {
@@ -17,9 +18,9 @@ public class AddScriptCommandHandler extends CommandHandlerBase {
 	public CHResult execute(SocketChannel channel, String uri, String data) {
 		
 		if( _apiScript.parse(data) ) {
+			_server.addApi(_apiScript);
 			
-			return new CHResult(CHResult.ResultStatus.Success, "Api script detected [" + _apiScript.dump() + "]");
-			
+			return new CHResult(CHResult.ResultStatus.Success, "Api script detected - " + _apiScript.getName() + " [" + _apiScript.dump() + "]");
 		}
 		
 		return new CHResult(CHResult.ResultStatus.Success, "Failed to parse script [" + data + "]");
