@@ -1,16 +1,14 @@
-api Mult {
+trigger PurgeUsers {
 
 	domain = test
 	env = development
-
-	input {
-		a,
-		b
+	
+	schedule {
+		24h
 	}
 	
 	do {
+			
 	}
 	
-	return { a * b }
-
 }
