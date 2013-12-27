@@ -1,4 +1,4 @@
-package scriptParsers;
+package logic;
 
 public class Workspace {
 

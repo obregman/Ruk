@@ -6,12 +6,13 @@ import java.nio.channels.SocketChannel;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+import logic.Workspace;
 import srv.RESTServer;
-
 import commandHandlers.AddScriptCommandHandler;
 import commandHandlers.CHResult;
 import commandHandlers.CommandHandlerBase;
 import commandHandlers.GetStatusHandler;
+import commandHandlers.RemoveScriptCommandHandler;
 import commandHandlers.StopCommandHandler;
 import HTTP.HTTPResponse;
 import processes.ProcessManager;
@@ -26,9 +27,12 @@ public class Server {
 	boolean _running = false;
 	ProcessManager _jobManager = new ProcessManager();
 	RESTServer _restSrv;
+	Workspace _workspace;
 	
 	public Server() {
 		_restSrv = new RESTServer(this);
+		_workspace = new Workspace();
+		
 		registerCommandHandlers();
 	}
 	
@@ -36,6 +40,7 @@ public class Server {
 		registerCommandHandler(new StopCommandHandler(this));
 		registerCommandHandler(new GetStatusHandler(this));
 		registerCommandHandler(new AddScriptCommandHandler(this));
+		registerCommandHandler(new RemoveScriptCommandHandler(this));
 		
 	}
 	
