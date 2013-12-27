@@ -8,6 +8,7 @@ import java.util.Hashtable;
 
 import srv.RESTServer;
 
+import commandHandlers.AddScriptCommandHandler;
 import commandHandlers.CHResult;
 import commandHandlers.CommandHandlerBase;
 import commandHandlers.GetStatusHandler;
@@ -34,6 +35,7 @@ public class Server {
 	private void registerCommandHandlers() {
 		registerCommandHandler(new StopCommandHandler(this));
 		registerCommandHandler(new GetStatusHandler(this));
+		registerCommandHandler(new AddScriptCommandHandler(this));
 		
 	}
 	

@@ -1,0 +1,10 @@
+api Mult {
+
+	input {
+		a,
+		b
+	}
+	
+	return { a * b }
+
+}
