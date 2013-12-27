@@ -3,7 +3,6 @@ package commandHandlers;
 import java.nio.channels.SocketChannel;
 
 import scriptParsers.ApiScript;
-import scriptParsers.Script1;
 import srv.Server;
 
 public class AddScriptCommandHandler extends CommandHandlerBase {

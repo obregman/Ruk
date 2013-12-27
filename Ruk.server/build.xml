@@ -3,7 +3,7 @@
     <property name="source.dir"     value="src"/>
     <property name="infra.lib"        value="..\build\bin"/>
     <property name="class.dir"	     value="bin"/>
-    <property name="jar.dir"        value="..\build\bin"/>
+    <property name="jar.dir"        value="build\bin"/>
     <property name="jar.file"        value="${jar.dir}/${ant.project.name}.jar"/>
     <property name="main-class"     value="main.Program"/>
 
