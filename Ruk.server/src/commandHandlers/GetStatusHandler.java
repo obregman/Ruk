@@ -11,7 +11,7 @@ public class GetStatusHandler extends CommandHandlerBase {
 	
 	public GetStatusHandler(Server server) {
 		super(server);
-		_uri = "/tysrv/ops/status";
+		_uri = "/ruk/ops/status";
 	}
 	
 	public CHResult execute(SocketChannel channel, String uri, String data) {

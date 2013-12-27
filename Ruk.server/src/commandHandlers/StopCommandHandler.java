@@ -8,7 +8,7 @@ public class StopCommandHandler extends CommandHandlerBase {
 	
 	public StopCommandHandler(Server server) {
 		super(server);
-		_uri = "/tysrv/ops/stop";
+		_uri = "/ruk/ops/stop";
 	}
 	
 	public CHResult execute(SocketChannel channel, String uri, String data) {
