@@ -15,6 +15,10 @@ public class ApiScript extends Script {
 	@Override
 	public boolean parse(String script) {
 		
+		ScriptTree tree = ScriptTree.generate(script);
+		
+		/*
+		
 		String key = extractKeyword(script);
 		if( key.equals("api") ) {
 			return false;
@@ -29,6 +33,7 @@ public class ApiScript extends Script {
 		// input clause
 		String inputText = getClause(script, "input");
 		_inputParameters = commaSeparatedValuesToList(inputText);
+		*/
 		
 		return true;
 	}
