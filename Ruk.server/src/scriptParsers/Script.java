@@ -48,7 +48,7 @@ public class Script {
 	
 	protected TextItem getNext(String text, int curPos) {
 		TextItem next = null;
-		for(int pos = curPos; pos < text.length(); curPos++) {
+		for(int pos = curPos; pos < text.length(); pos++) {
 			char ch = text.charAt(pos);
 			if( ch == ' ' )
 				next = new TextItem(text.substring(curPos, pos - 1), pos);
@@ -93,5 +93,4 @@ public class Script {
 			list.add(str);
 		return list;			
 	}
-	
 }
