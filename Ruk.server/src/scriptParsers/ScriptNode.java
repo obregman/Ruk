@@ -5,6 +5,7 @@ import java.util.List;
 
 public class ScriptNode {
 	
+	public String text;
 	public int start;
 	public int end;
 	public List<String> elements = new ArrayList<String>();
