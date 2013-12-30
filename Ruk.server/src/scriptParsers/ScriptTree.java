@@ -21,56 +21,27 @@ public class ScriptTree {
 	
 	private static ScriptNode generateSubNode(String script, int from) {
 		
-		boolean isBlock = false;
-		boolean hasChildNode = false;
-		if( script.charAt(from) == '{' ) { 
-			isBlock = true;
-			from++;			
-		}
-		
 		ScriptNode node = new ScriptNode();
 		node.start = from;
+		node.end = script.length();
 		
 		for(int pos = from; pos < script.length(); pos++) {
 			
-			char ch = script.charAt(pos);			
+			char ch = script.charAt(pos);
 			
-			if( ch == ';' ) {
-				// New line
-				if( !isBlock ) {	
-					
-					if( pos != from ) {
-						node.text = script.substring(from, pos).trim();
-						node.end = pos;
-					}
-					else
-						node = null;
-					break;
-				}
-				ScriptNode childNode = generateSubNode(script, pos+1);
-				if( childNode != null ) {
-					node.children.add(childNode);
-					pos = childNode.end + 1;					
-				}				
-			}
-			else
 			if( ch == '{' ) {
-				hasChildNode = true;
-				node.text = script.substring(from, pos).trim();				
-				ScriptNode childNode = generateSubNode(script, pos);
-				if( childNode != null ) {
-					node.children.add(childNode);
-					pos = childNode.end + 1;
-				}
+				ScriptNode childNode = generateSubNode(script, pos + 1);
+				node.children.add(childNode);
+				pos = childNode.end;
 			}
 			else
-			if( ch == '}') {
-				if( !hasChildNode )
-					node.text = script.substring(from, pos).trim();				
-				node.end = pos;
-				break;		
-			}
+				if( ch == '}' ) {
+					node.end = pos - 1;
+					break;
+				}			
 		}
+		
+		node.text = script.substring(node.start, node.end);
 		
 		return node;
 	}
