@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Ruk.server" basedir="." default="jar">
     <property name="source.dir"     value="src"/>
-    <property name="infra.lib"        value="..\build\bin"/>
+    <property name="infra.lib"        value="..\Ruk.infra\deploy"/>
     <property name="class.dir"	     value="bin"/>
     <property name="jar.dir"        value="..\build\bin"/>
     <property name="jar.file"        value="${jar.dir}/${ant.project.name}.jar"/>
@@ -16,11 +16,12 @@
     <target name="clean" description="delete old files">
         <delete dir="${class.dir}"/>
         <delete file="${jar.dir}/${ant.project.name}.jar"/>
+        <mkdir dir="${jar.dir}"/>
     </target>
 
     <target name="compile" description="build class files" depends="clean">
         <mkdir dir="${class.dir}"/>
-        <javac srcdir="${source.dir}" destdir="${class.dir}" debug="true" debuglevel="lines, vars, and source">
+        <javac srcdir="${source.dir}" destdir="${class.dir}" debug="true">
             <classpath refid="libraries.path"/>
         </javac>
     </target>
