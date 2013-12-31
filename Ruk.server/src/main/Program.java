@@ -1,6 +1,6 @@
 package main;
 
-import scriptParsers.ScriptTree;
+import scriptParsers.Script;
 import srv.Server;
 
 public class Program {

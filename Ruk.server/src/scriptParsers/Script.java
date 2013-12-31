@@ -1,96 +1,105 @@
 package scriptParsers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Script {
 	
+	ScriptBlock _root;
 	protected String _name;
 	
-	protected class TextItem {
-		public TextItem(String str, int pos) { this.str = str; this.pos = pos; }
-		public String str;
-		public int pos;
+	public Script() {
 	}
 	
-	public boolean parse(String script) {
-		return false;
-	}
-	
-	public void run() {
-		
-	}
-	
-	protected String extractKeyword(String text) {
-		TextItem item;
-		item = getNext(text, 0);
-		if( item != null ) {
-			String key = item.str;
-			return key;
-		}
-		return "";
-	}
-	
-	protected String extractName(String text) {
-		TextItem item;
-		item = getNext(text, 0);
-		if( item != null ) {
-			item = getNext(text, item.pos);
-			String name = item.str;
-			return name;
-		}
-		return "";
+	public ScriptBlock getRoot() {
+		return _root;
 	}
 	
 	public String getName() {
 		return _name;
 	}
 	
-	protected TextItem getNext(String text, int curPos) {
-		TextItem next = null;
-		for(int pos = curPos; pos < text.length(); pos++) {
-			char ch = text.charAt(pos);
-			if( ch == ' ' )
-				next = new TextItem(text.substring(curPos, pos - 1), pos);
-			else
-				if( ch == '{')
-					next = new TextItem("{", pos);
-				else
-					if( ch == '{')
-						next = new TextItem("}", pos);
-		}		
-		
-		return next;		
+	public boolean parse(String script) {
+		return false;
 	}
 	
-	protected String getClause(String script, String keyword) {
+	public boolean generate(String script) {
+		script = cleanScript(script);
 		
-		String text = "";
-		int keywordPos = script.indexOf(keyword);
+		_root = breakToBlocks(script,0);
 		
-		if( found(keywordPos) ) {
-			int open = script.indexOf("{", keywordPos);
-			if( found(open) ) {
-				int close = script.indexOf("}", open);
-				if( found(close) ) {
-					text = script.substring(open + 1, close - 1);				
-				}					
+		if (_root == null)
+			return false;
+		else
+			return true;
+	}
+	
+	private static ScriptBlock breakToBlocks(String script, int from) {
+		
+		ScriptBlock node = new ScriptBlock();
+		boolean hasBlock = false;
+		int lineStart = from;		
+		node.start = from;
+		node.end = script.length();
+		
+		for(int pos = from; pos < script.length(); pos++) {
+			
+			char ch = script.charAt(pos);
+			
+			if( ch == ';' ) {
+				
+				if (lineStart == pos ) {
+					lineStart++;
+					continue;
+				}
+					
+				ScriptLine line = new ScriptLine(lineStart, pos - 1, script.substring(lineStart, pos));
+				node.lines.add(line);
+				lineStart = pos + 1;
 			}
+			else
+			if( ch == '{' ) {
+				hasBlock = true;
+				node.text = script.substring(lineStart, pos - 1);
+				ScriptBlock innerBlock = breakToBlocks(script, pos + 1);
+				node.innerBlocks.add(innerBlock);
+				pos = innerBlock.end;
+			}
+			else
+				if( ch == '}' ) {
+					node.end = pos - 1;
+					break;
+				}			
 		}
 		
-		return text;
-	}
-	
-	protected boolean found(int pos) {
-		return pos >= 0;
-	}
-	
-	protected List<String> commaSeparatedValuesToList(String text) {
+		if( !hasBlock )
+			node.text = script.substring(node.start, node.end);
 		
-		List<String> list = new ArrayList<String>();
-		String[] tokens = text.split(",");
-		for(String str:tokens)
-			list.add(str);
-		return list;			
+		
+		return node;
+	}
+	
+	private static String cleanScript(String script) {
+		StringBuilder sb = new StringBuilder();
+		for(int pos = 0; pos < script.length(); pos++) {
+			
+			char ch1 = script.charAt(pos);
+			char ch2 = ( pos+1<script.length() )?script.charAt(pos):0;
+			
+			if( ch1 == '\n' )
+				sb.append(';');
+			else
+			if( ch1 == '\r' && ch2 == '\n') {
+				sb.append(';');
+				pos++;
+			}
+			else
+				if( ch1 != '\t' )
+					sb.append(ch1);
+			
+		}
+		return sb.toString();
+	}
+	
+	protected ScriptBlock findBlock(String str) {
+		return _root.findBlock(str);
 	}
 }
+
