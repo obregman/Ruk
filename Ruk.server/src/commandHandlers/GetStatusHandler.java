@@ -9,9 +9,11 @@ import HTTP.HTTPResponse;
 
 public class GetStatusHandler extends CommandHandlerBase {
 	
+	final String SERVICE_URI = "/ruk/ops/status";
+	
 	public GetStatusHandler(Server server) {
 		super(server);
-		_uri = "/ruk/ops/status";
+		_uri = SERVICE_URI;
 	}
 	
 	public CHResult execute(SocketChannel channel, String uri, String data) {

@@ -7,7 +7,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import logic.Workspace;
-import scriptParsers.ApiScript;
+import scripts.ApiScript;
 import scripts.Script;
 import srv.RESTServer;
 import commandHandlers.AddScriptCommandHandler;

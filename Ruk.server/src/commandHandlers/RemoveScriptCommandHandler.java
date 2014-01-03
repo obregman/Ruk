@@ -2,16 +2,18 @@ package commandHandlers;
 
 import java.nio.channels.SocketChannel;
 
-import scriptParsers.ApiScript;
+import scripts.ApiScript;
 import srv.Server;
 
 public class RemoveScriptCommandHandler extends CommandHandlerBase {
+	
+	final String SERVICE_URI = "/ruk/ops/remove_script";
 	
 	ApiScript _apiScript = new ApiScript();
 	
 	public RemoveScriptCommandHandler(Server server) {
 		super(server);
-		_uri = "/ruk/ops/remove-script";
+		_uri = SERVICE_URI;
 	}
 	
 	public CHResult execute(SocketChannel channel, String uri, String data) {
