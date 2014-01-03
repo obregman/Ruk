@@ -86,7 +86,7 @@ public class ScriptTree {
 		}
 		
 		if( !hasBlock )
-			block.innerText = script.substring(block.start, block.end);
+			block.title = script.substring(block.start, block.end);
 		
 			
 		return block;

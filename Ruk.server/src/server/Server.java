@@ -6,13 +6,13 @@ import java.nio.channels.SocketChannel;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-import logic.Workspace;
 import scripts.ApiScript;
 import scripts.Script;
 import server.RESTServer;
 import commandHandlers.AddScriptCommandHandler;
 import commandHandlers.CHResult;
 import commandHandlers.CommandHandlerBase;
+import commandHandlers.DynamicApiCommandHandler;
 import commandHandlers.GetStatusHandler;
 import commandHandlers.RemoveScriptCommandHandler;
 import commandHandlers.StopCommandHandler;
@@ -98,6 +98,15 @@ public class Server {
 	public void addScript(Script script) {
 		
 		System.out.println(String.format("Server: Script object '%s' added", script.getType()));
+		
+		if( script instanceof ApiScript ) {
+			
+			DynamicApiCommandHandler dynamicCH = new DynamicApiCommandHandler(this);
+			dynamicCH.setApiObject((ApiScript)script);
+			registerCommandHandler(dynamicCH);
+						
+			//_workspace.addApi((ApiScript)script);
+		}
 	}
 
 }

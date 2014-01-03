@@ -1,13 +1,12 @@
 package commandHandlers;
 
 import java.nio.channels.SocketChannel;
-
+import scripts.ApiScript;
 import server.Server;
-import logic.ApiObject;
 
 public class DynamicApiCommandHandler extends CommandHandlerBase {
 	
-	ApiObject _apiObj;
+	ApiScript _apiScript;
 	
 	public DynamicApiCommandHandler(Server server) {
 		super(server);
@@ -17,8 +16,9 @@ public class DynamicApiCommandHandler extends CommandHandlerBase {
 		_uri = "/ruk/ops/" + name;
 	}
 	
-	public void setApiObject(ApiObject apiObj) {
-		_apiObj = apiObj;
+	public void setApiObject(ApiScript script) {
+		_apiScript = script;
+		setName(script.getName());
 	}
 	
 	public CHResult execute(SocketChannel channel, String uri, String data) {
