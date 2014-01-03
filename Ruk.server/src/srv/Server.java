@@ -8,6 +8,7 @@ import java.util.Hashtable;
 
 import logic.Workspace;
 import scriptParsers.ApiScript;
+import scripts.Script;
 import srv.RESTServer;
 import commandHandlers.AddScriptCommandHandler;
 import commandHandlers.CHResult;
@@ -94,7 +95,7 @@ public class Server {
 		} catch(IOException ex) {}
 	}
 	
-	public void addApi(ApiScript apiScript) {
+	public void addScript(Script script) {
 		
 	}
 

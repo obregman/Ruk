@@ -1,11 +1,13 @@
 package scriptParsers;
 
-public class Script {
+import scripts.Script;
+
+public class ScriptTree {
 	
 	ScriptBlock _root;
 	protected String _name;
 	
-	public Script() {
+	public ScriptTree() {
 	}
 	
 	public ScriptBlock getRoot() {
@@ -16,19 +18,14 @@ public class Script {
 		return _name;
 	}
 	
-	public boolean parse(String script) {
-		return false;
+	public Script parse(String script) {
+		return null;
 	}
-	
-	public boolean generate(String script) {
+		
+	public static ScriptBlock buildTree(String script) {
 		script = cleanScript(script);
-		
-		_root = breakToBlocks(script,0);
-		
-		if (_root == null)
-			return false;
-		else
-			return true;
+		ScriptBlock root = breakToBlocks(script, 0);
+		return root;
 	}
 	
 	private static ScriptBlock breakToBlocks(String script, int from) {

@@ -3,28 +3,29 @@ package scriptParsers;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApiScript extends Script {
+import scripts.ApiScript;
+import scripts.Script;
+
+public class ApiScript {
 	
+	String _name;
 	List<String> _inputParameters = new ArrayList<String>();
 	
 	public ApiScript() {
 	}
 	
-	@Override
-	public boolean parse(String script) {
+	public boolean parse(ScriptTree tree) {
 		
-		boolean success = generate(script);
-		if( !success )
-			return false;
-		
-		ScriptBlock block = findBlock("api");
+		ScriptBlock block = tree.findBlock("api");
 		
 		if( block == null )
 			return false;
 		
-		_name = block.text.split(" ")[1];
+		ApiScript scriptObj = new ApiScript();
 		
-		ScriptBlock inputBlock = findBlock("input");
+		scriptObj._name = block.text.split(" ")[1];
+		
+		ScriptBlock inputBlock = tree.findBlock("input");
 		if( inputBlock != null ) {
 			String[] params = inputBlock.innerBlocks.get(0).text.split(",");
 			for (int i = 0; i < params.length; i++) {
@@ -32,7 +33,7 @@ public class ApiScript extends Script {
 			}
 		}
 		
-		return true;
+		return false;
 	}
 	
 	public String dump() {
