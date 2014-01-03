@@ -26,7 +26,7 @@ public class ApiScript extends Script {
 			return false;
 		
 		if( inputBlock != null ) {
-			String[] params = inputBlock.innerBlocks.get(0).title.split(",");
+			String[] params = ((ScriptBlock)inputBlock.innerElements.get(0)).prefix.split(",");
 			for (int i = 0; i < params.length; i++) {
 				_inputParameters.add(params[i]);
 			}

@@ -29,15 +29,14 @@ public class ScriptTree {
 	}
 		
 	public static ScriptTree buildTree(String script) {
-		script = cleanScript(script);
-		ScriptBlock root = breakToBlocks(script, 0);
+		ScriptBlock root = parse(script, 0);
 		if( root == null )
 			return null;
 		
 		ScriptTree tree = new ScriptTree(root);	
 		
 		// Script type
-		String[] parts = root.title.split(" ");
+		String[] parts = ((ScriptBlock)root.innerElements.get(0)).prefix.split(" ");
 		if( parts.length > 0)
 			tree._type = parts[0];
 		if( parts.length > 1)
@@ -46,50 +45,62 @@ public class ScriptTree {
 		return tree;
 	}
 	
-	private static ScriptBlock breakToBlocks(String script, int from) {
+public static ScriptBlock parse(String script, int from) {
 		
 		ScriptBlock block = new ScriptBlock();
-		boolean hasBlock = false;
-		int lineStart = from;		
-		block.start = from;
-		block.end = script.length();
 		
-		for(int pos = from; pos < script.length(); pos++) {
+		int lineStart = from;
+		boolean contentReached = false;
+		
+		int pos = from;
+		while(pos < script.length()) {
 			
 			char ch = script.charAt(pos);
 			
-			if( ch == ';' ) {
-				
-				if (lineStart == pos ) {
-					lineStart++;
-					continue;
+			if( ch == '\t' )
+				continue;
+			else
+			if( ch == '\r' || ch == '\n' ) {
+				// End of line
+				if(contentReached) {
+					ScriptElement lineElement = new ScriptElement();
+					lineElement.start = lineStart;
+					lineElement.end = pos - 1;
+					lineElement.innerText = script.substring(lineElement.start, pos);
+					block.innerElements.add(lineElement);
 				}
-					
-				ScriptLine line = new ScriptLine(lineStart, pos - 1, script.substring(lineStart, pos));
-				block.lines.add(line);
-				lineStart = pos + 1;
+				pos = TextHelper.nextRealCharacter(script, pos);
+				if( pos < 0 )
+					break;
+				lineStart = pos;
+				continue;
 			}
 			else
 			if( ch == '{' ) {
-				hasBlock = true;
-				block.title = script.substring(lineStart, pos - 1);
-				ScriptBlock innerBlock = breakToBlocks(script, pos + 1);
-				block.innerBlocks.add(innerBlock);
-				pos = innerBlock.end;
+				// Open block
+				ScriptBlock innerBlock = parse(script, pos + 1);
+				innerBlock.prefix = script.substring(lineStart, pos - 1);
+				block.innerElements.add(innerBlock);
+				pos = TextHelper.nextRealCharacter(script, innerBlock.end + 2);
+				if( pos < 0 )
+					break;
+				lineStart = pos;
+				continue;
 			}
 			else
-				if( ch == '}' ) {
-					block.innerText = script.substring(from, pos - 1);
-					block.end = pos - 1;
-					break;
-				}			
+			if( ch == '}') {
+				block.start = from;
+				block.end = pos - 1;
+				break;
+			}
+			else
+				contentReached = true;
+			
+			pos++;
 		}
 		
-		if( !hasBlock )
-			block.title = script.substring(block.start, block.end);
-		
-			
 		return block;
+		
 	}
 	
 	private static String cleanScript(String script) {

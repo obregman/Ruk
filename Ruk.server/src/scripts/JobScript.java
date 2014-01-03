@@ -22,7 +22,7 @@ public class JobScript extends Script {
 		
 		ScriptBlock inputBlock = tree.getRoot().findBlock("input");
 		if( inputBlock != null ) {
-			String[] params = inputBlock.innerBlocks.get(0).title.split(",");
+			String[] params = ((ScriptBlock)inputBlock.innerElements.get(0)).prefix.split(",");
 			for (int i = 0; i < params.length; i++) {
 				_inputParameters.add(params[i]);
 			}

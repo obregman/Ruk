@@ -1,29 +1,21 @@
 package scriptParsers;
 
-import java.util.ArrayList;
-import java.util.List;
+public class ScriptBlock extends ScriptElement {
 
-public class ScriptBlock {
-		
-	public String title;
-	public String innerText;
-	public int start;
-	public int end;
-	public List<ScriptBlock> innerBlocks = new ArrayList<ScriptBlock>();
-	public List<ScriptLine> lines = new ArrayList<ScriptLine>();
+	public String prefix;
 	
-	
-	public ScriptBlock findBlock(String str) {
+	public ScriptBlock findBlock(String name) {
 		
-		if ( title.contains(str) )
+		if( prefix !=null && prefix.equals(name) )
 			return this;
-		ScriptBlock foundBlock = null;
-		for(ScriptBlock innerBlock:innerBlocks) {
-			foundBlock = innerBlock.findBlock(str);
-			if(foundBlock != null)
-				break;
+		
+		for(ScriptElement element:innerElements) {
+			if( element instanceof ScriptBlock) {
+				ScriptBlock block = ((ScriptBlock)element).findBlock(name);
+				if( block != null )
+					return block;
+			}
 		}
-		return foundBlock;
+		return null;
 	}
-	
 }
