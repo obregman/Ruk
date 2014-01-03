@@ -48,11 +48,11 @@ public class ScriptTree {
 	
 	private static ScriptBlock breakToBlocks(String script, int from) {
 		
-		ScriptBlock node = new ScriptBlock();
+		ScriptBlock block = new ScriptBlock();
 		boolean hasBlock = false;
 		int lineStart = from;		
-		node.start = from;
-		node.end = script.length();
+		block.start = from;
+		block.end = script.length();
 		
 		for(int pos = from; pos < script.length(); pos++) {
 			
@@ -66,30 +66,30 @@ public class ScriptTree {
 				}
 					
 				ScriptLine line = new ScriptLine(lineStart, pos - 1, script.substring(lineStart, pos));
-				node.lines.add(line);
+				block.lines.add(line);
 				lineStart = pos + 1;
 			}
 			else
 			if( ch == '{' ) {
 				hasBlock = true;
-				node.title = script.substring(lineStart, pos - 1);
+				block.title = script.substring(lineStart, pos - 1);
 				ScriptBlock innerBlock = breakToBlocks(script, pos + 1);
-				node.innerBlocks.add(innerBlock);
+				block.innerBlocks.add(innerBlock);
 				pos = innerBlock.end;
 			}
 			else
 				if( ch == '}' ) {
-					node.innerText = script.substring(from, pos - 1);
-					node.end = pos - 1;
+					block.innerText = script.substring(from, pos - 1);
+					block.end = pos - 1;
 					break;
 				}			
 		}
 		
 		if( !hasBlock )
-			node.innerText = script.substring(node.start, node.end);
+			block.innerText = script.substring(block.start, block.end);
 		
 			
-		return node;
+		return block;
 	}
 	
 	private static String cleanScript(String script) {

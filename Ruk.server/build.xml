@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Ruk.server" basedir="." default="jar">
     <property name="source.dir"     value="src"/>
-    <property name="infra.lib"        value="..\Ruk.infra\deploy"/>
+    <property name="infra.lib"        value="..\Ruk.infra\jar"/>
     <property name="class.dir"	     value="bin"/>
-    <property name="jar.dir"        value="deploy"/>
+    <property name="jar.dir"        value="jar"/>
     <property name="jar.file"        value="${jar.dir}/${ant.project.name}.jar"/>
     <property name="main-class"     value="main.Program"/>
 
