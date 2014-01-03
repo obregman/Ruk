@@ -6,7 +6,6 @@ import java.nio.channels.SocketChannel;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-import logic.Workspace;
 import scripts.ApiScript;
 import scripts.Script;
 import server.RESTServer;

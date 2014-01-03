@@ -1,6 +1,7 @@
-package logic;
+package server;
 
-import server.Server;
+import scripts.ApiScript;
+
 
 public class Workspace {
 		
@@ -10,7 +11,7 @@ public class Workspace {
 		_server = server;
 	}
 	
-	public void addApi(ApiObject apiObj) {
+	public void addApi(ApiScript script) {
 		
 	}
 	
