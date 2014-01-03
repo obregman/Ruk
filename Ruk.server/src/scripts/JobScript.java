@@ -5,15 +5,14 @@ import java.util.List;
 
 import scriptParsers.ScriptBlock;
 import scriptParsers.ScriptTree;
-import scripts.ApiScript;
+import scripts.JobScript;
 
-public class ApiScript extends Script {
+public class JobScript extends Script {
 	
 	List<String> _inputParameters = new ArrayList<String>();
-	String _do;
 	
-	public ApiScript() {
-		super("api");
+	public JobScript() {
+		super("job");
 	}
 	
 	@Override
@@ -22,9 +21,6 @@ public class ApiScript extends Script {
 		_name = tree.getName();
 		
 		ScriptBlock inputBlock = tree.getRoot().findBlock("input");
-		if( inputBlock == null )
-			return false;
-		
 		if( inputBlock != null ) {
 			String[] params = inputBlock.innerBlocks.get(0).title.split(",");
 			for (int i = 0; i < params.length; i++) {
@@ -32,18 +28,12 @@ public class ApiScript extends Script {
 			}
 		}
 		
-		ScriptBlock doBlock = tree.getRoot().findBlock("do");
-		if( doBlock == null )
-			return false;
-		
-		_do = doBlock.innerText;
-		
 		return true;
 	}
 	
 	@Override
 	public Script getObject() {
-		return new ApiScript();
+		return new JobScript();
 	}
 	
 	@Override

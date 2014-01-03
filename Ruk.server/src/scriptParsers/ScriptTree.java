@@ -37,7 +37,7 @@ public class ScriptTree {
 		ScriptTree tree = new ScriptTree(root);	
 		
 		// Script type
-		String[] parts = root.text.split(" ");
+		String[] parts = root.title.split(" ");
 		if( parts.length > 0)
 			tree._type = parts[0];
 		if( parts.length > 1)
@@ -72,20 +72,21 @@ public class ScriptTree {
 			else
 			if( ch == '{' ) {
 				hasBlock = true;
-				node.text = script.substring(lineStart, pos - 1);
+				node.title = script.substring(lineStart, pos - 1);
 				ScriptBlock innerBlock = breakToBlocks(script, pos + 1);
 				node.innerBlocks.add(innerBlock);
 				pos = innerBlock.end;
 			}
 			else
 				if( ch == '}' ) {
+					node.innerText = script.substring(from, pos - 1);
 					node.end = pos - 1;
 					break;
 				}			
 		}
 		
 		if( !hasBlock )
-			node.text = script.substring(node.start, node.end);
+			node.innerText = script.substring(node.start, node.end);
 		
 			
 		return node;

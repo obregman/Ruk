@@ -1,4 +1,4 @@
-class User {
+entity User {
 
 	domain = test
 	env = development

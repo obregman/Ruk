@@ -1,4 +1,4 @@
-trigger PurgeUsers {
+job PurgeUsers {
 
 	domain = test
 	env = development
