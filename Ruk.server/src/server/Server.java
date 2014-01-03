@@ -1,4 +1,4 @@
-package srv;
+package server;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -9,7 +9,7 @@ import java.util.Hashtable;
 import logic.Workspace;
 import scripts.ApiScript;
 import scripts.Script;
-import srv.RESTServer;
+import server.RESTServer;
 import commandHandlers.AddScriptCommandHandler;
 import commandHandlers.CHResult;
 import commandHandlers.CommandHandlerBase;

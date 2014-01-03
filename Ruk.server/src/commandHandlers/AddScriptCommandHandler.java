@@ -8,7 +8,7 @@ import scriptParsers.ScriptBlock;
 import scriptParsers.ScriptTree;
 import scripts.ApiScript;
 import scripts.Script;
-import srv.Server;
+import server.Server;
 
 public class AddScriptCommandHandler extends CommandHandlerBase {
 	

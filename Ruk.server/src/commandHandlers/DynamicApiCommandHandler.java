@@ -4,7 +4,7 @@ import java.nio.channels.SocketChannel;
 
 import logic.ApiObject;
 import scripts.ApiScript;
-import srv.Server;
+import server.Server;
 
 public class DynamicApiCommandHandler extends CommandHandlerBase {
 	

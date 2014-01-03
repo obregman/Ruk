@@ -2,7 +2,7 @@ package commandHandlers;
 
 import java.nio.channels.SocketChannel;
 
-import srv.Server;
+import server.Server;
 
 public class CommandHandlerBase {
 	protected String _uri;

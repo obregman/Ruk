@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
-import srv.Server;
+import server.Server;
 import HTTP.HTTPResponse;
 
 public class GetStatusHandler extends CommandHandlerBase {

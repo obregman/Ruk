@@ -1,6 +1,6 @@
 package logic;
 
-import srv.Server;
+import server.Server;
 
 public class Workspace {
 		
