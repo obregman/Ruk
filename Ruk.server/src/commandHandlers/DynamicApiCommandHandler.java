@@ -2,9 +2,8 @@ package commandHandlers;
 
 import java.nio.channels.SocketChannel;
 
-import logic.ApiObject;
-import scripts.ApiScript;
 import server.Server;
+import logic.ApiObject;
 
 public class DynamicApiCommandHandler extends CommandHandlerBase {
 	

@@ -11,7 +11,7 @@ import scripts.Script;
 import server.Server;
 
 public class AddScriptCommandHandler extends CommandHandlerBase {
-	
+		
 	final String SERVICE_URI = "/ruk/ops/add-script";
 	
 	Hashtable<String, Script> _scriptHandlers = new Hashtable<String, Script>(); 
