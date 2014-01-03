@@ -1,13 +1,38 @@
 package scripts;
 
+import scriptParsers.ScriptTree;
+
 public class Script {
+	
+	protected String _name;
+	protected String _type;
+	
+	public Script() {
+		
+	}
+	
+	public Script(String type) {
+		_type = type;
+	}
+	
+	public String getType() {
+		return _type;		
+	}
+	
+	public String getName() {
+		return _name;
+	}
+	
+	public String dump() {
+		return "";
+	}
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	public Script getObject() {
+		return null;
+	}
+	
+	public boolean parse(ScriptTree tree) {
+		return false;
 	}
 
 }

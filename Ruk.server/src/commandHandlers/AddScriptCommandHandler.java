@@ -1,36 +1,50 @@
 package commandHandlers;
 
 import java.nio.channels.SocketChannel;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
-import scriptParsers.ApiScript;
 import scriptParsers.ScriptBlock;
 import scriptParsers.ScriptTree;
+import scripts.ApiScript;
 import scripts.Script;
 import srv.Server;
 
 public class AddScriptCommandHandler extends CommandHandlerBase {
 	
+	final String SERVICE_URI = "/ruk/ops/add-script";
+	
+	Hashtable<String, Script> _scriptHandlers = new Hashtable<String, Script>(); 
+	
 	ApiScript _apiScript = new ApiScript();
 	
 	public AddScriptCommandHandler(Server server) {
 		super(server);
-		_uri = "/ruk/ops/add-script";
+		_uri = SERVICE_URI;
+		
+		ApiScript apiScript = new ApiScript();
+		_scriptHandlers.put(apiScript.getType(), apiScript);
 	}
 	
 	public CHResult execute(SocketChannel channel, String uri, String data) {
+
+		ScriptTree tree = ScriptTree.buildTree(data);
 		
-		ScriptBlock block = ScriptTree.buildTree(data);
-		
-		ScriptBlock block = findBlock("api");
-		
-		Script script = _apiScript.parse(data);
-		if( script != null ) {
-			_server.addScript(script);
+		String type = tree.getType();
+		if ( _scriptHandlers.containsKey(type) ) {
 			
-			return new CHResult(CHResult.ResultStatus.Success, "Api script detected - " + _apiScript.getName() + " [" + _apiScript.dump() + "]");
+			System.out.println(String.format("Script of type '%s' detectrd", type));
+			
+			Script scriptObj = _scriptHandlers.get(type).getObject();
+			
+			if( scriptObj != null ) {
+				boolean success = scriptObj.parse(tree);
+				
+				return new CHResult(CHResult.ResultStatus.Success, "Api script detected - " + scriptObj.getName() + " [" + scriptObj.dump() + "]");
+			}
 		}
-		
-		return new CHResult(CHResult.ResultStatus.Success, "Failed to parse script [" + data + "]");
+			
+		return new CHResult(CHResult.ResultStatus.Failed, "Failed to parse script [" + data + "]");
 	}
 
 }

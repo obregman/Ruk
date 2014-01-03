@@ -6,9 +6,11 @@ import srv.Server;
 
 public class StopCommandHandler extends CommandHandlerBase {
 	
+	final String SERVICE_URI = "/ruk/ops/stop";
+	
 	public StopCommandHandler(Server server) {
 		super(server);
-		_uri = "/ruk/ops/stop";
+		_uri = SERVICE_URI;
 	}
 	
 	public CHResult execute(SocketChannel channel, String uri, String data) {

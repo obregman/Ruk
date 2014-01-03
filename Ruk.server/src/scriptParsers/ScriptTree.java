@@ -5,9 +5,11 @@ import scripts.Script;
 public class ScriptTree {
 	
 	ScriptBlock _root;
-	protected String _name;
+	String _name;
+	String _type;
 	
-	public ScriptTree() {
+	public ScriptTree(ScriptBlock root) {
+		_root = root;
 	}
 	
 	public ScriptBlock getRoot() {
@@ -18,14 +20,30 @@ public class ScriptTree {
 		return _name;
 	}
 	
+	public String getType() {
+		return _type;
+	}
+	
 	public Script parse(String script) {
 		return null;
 	}
 		
-	public static ScriptBlock buildTree(String script) {
+	public static ScriptTree buildTree(String script) {
 		script = cleanScript(script);
 		ScriptBlock root = breakToBlocks(script, 0);
-		return root;
+		if( root == null )
+			return null;
+		
+		ScriptTree tree = new ScriptTree(root);	
+		
+		// Script type
+		String[] parts = root.text.split(" ");
+		if( parts.length > 0)
+			tree._type = parts[0];
+		if( parts.length > 1)
+			tree._name = parts[1];		
+		
+		return tree;
 	}
 	
 	private static ScriptBlock breakToBlocks(String script, int from) {
@@ -69,7 +87,7 @@ public class ScriptTree {
 		if( !hasBlock )
 			node.text = script.substring(node.start, node.end);
 		
-		
+			
 		return node;
 	}
 	
