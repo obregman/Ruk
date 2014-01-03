@@ -1,17 +1,36 @@
 import static org.junit.Assert.*;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-
 import org.junit.Test;
-
-import scriptParsers.ApiScript;
 import scriptParsers.ScriptTree;
 
 
 public class TestScripts {
+	
+	@Test
+	public void basicScriptTest() {
+
+		String content = "root {\n" +
+							"line1\n" +
+							"b1 {\n" +
+								"t1\n" +
+							"}\n" +
+							"b2 {\n" +
+								"t2\n" +
+							"}\n" +
+							"line2\n" +
+							"}";		
+				
+				
+		ScriptTree tree = ScriptTree.buildTree(content);
+		
+		if( tree == null || tree.getRoot() == null ) {
+			fail("Failed to generate tree");	
+		}		
+	}
+	
 	
 	@Test
 	public void testScriptTreeCreation() {
@@ -30,7 +49,7 @@ public class TestScripts {
 	        e.printStackTrace();
 	    }
 		
-		ScriptTree tree = ScriptTree.generate(content);
+		ScriptTree tree = ScriptTree.buildTree(content);
 		
 		if( tree.getRoot() == null ) {
 			fail("Failed to generate tree");	
@@ -54,11 +73,17 @@ public class TestScripts {
 	        e.printStackTrace();
 	    }
 		
-		ApiScript apiScript = new ApiScript();
-		
-		if( !apiScript.parse(content) ) {
-			fail("Failed to parse script");			
-		}		
+	    ScriptTree tree = ScriptTree.buildTree(content);
+	    
+	    if( tree.getType().equals("api") ) {
+	    	scripts.ApiScript apiScript = new scripts.ApiScript();
+	    	boolean success = apiScript.parse(tree);
+	    	
+	    	if( !success ) {
+				fail("Failed to parse api script");			
+			}	
+	    }
+			
 	}
 
 }

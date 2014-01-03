@@ -5,7 +5,8 @@ import java.util.List;
 
 public class ScriptBlock {
 		
-	public String text;
+	public String title;
+	public String innerText;
 	public int start;
 	public int end;
 	public List<String> elements = new ArrayList<String>();
@@ -15,7 +16,7 @@ public class ScriptBlock {
 	
 	public ScriptBlock findBlock(String str) {
 		
-		if ( text.contains(str) )
+		if ( title.contains(str) )
 			return this;
 		ScriptBlock foundBlock = null;
 		for(ScriptBlock innerBlock:innerBlocks) {
