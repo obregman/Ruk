@@ -33,12 +33,16 @@ public class AddScriptCommandHandler extends CommandHandlerBase {
 		String type = tree.getType();
 		if ( _scriptHandlers.containsKey(type) ) {
 			
-			System.out.println(String.format("Script of type '%s' detectrd", type));
+			System.out.println(String.format("AddScriptCommand: Script of type '%s' detectrd", type));
 			
 			Script scriptObj = _scriptHandlers.get(type).getObject();
 			
 			if( scriptObj != null ) {
 				boolean success = scriptObj.parse(tree);
+				
+				if( success ) {
+					_server.addScript(scriptObj);
+				}
 				
 				return new CHResult(CHResult.ResultStatus.Success, "Api script detected - " + scriptObj.getName() + " [" + scriptObj.dump() + "]");
 			}

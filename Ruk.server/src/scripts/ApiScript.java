@@ -28,7 +28,7 @@ public class ApiScript extends Script {
 			}
 		}
 		
-		return false;
+		return true;
 	}
 	
 	@Override

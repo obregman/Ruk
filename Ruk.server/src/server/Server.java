@@ -97,6 +97,7 @@ public class Server {
 	
 	public void addScript(Script script) {
 		
+		System.out.println(String.format("Server: Script object '%s' added", script.getType()));
 	}
 
 }
