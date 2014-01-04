@@ -10,29 +10,6 @@ import scriptParsers.ScriptTree;
 public class TestScripts {
 	
 	@Test
-	public void basicScriptTest() {
-
-		String content = "root {\n" +
-							"line1\n" +
-							"b1 {\n" +
-								"t1\n" +
-							"}\n" +
-							"b2 {\n" +
-								"t2\n" +
-							"}\n" +
-							"line2\n" +
-							"}";		
-				
-				
-		ScriptTree tree = ScriptTree.buildTree(content);
-		
-		if( tree == null || tree.getRoot() == null ) {
-			fail("Failed to generate tree");	
-		}		
-	}
-	
-	
-	@Test
 	public void testScriptTreeCreation() {
 
 		String filename = "..\\Ruk.server\\scriptSamples\\api-mult.ruk";
