@@ -11,6 +11,7 @@ public class ApiScript extends Script {
 	
 	List<String> _inputParameters = new ArrayList<String>();
 	String _do;
+	String _return;
 	
 	public ApiScript() {
 		super("api");
@@ -38,7 +39,18 @@ public class ApiScript extends Script {
 		
 		_do = doBlock.innerText;
 		
+		ScriptBlock returnBlock = tree.getRoot().findBlock("return");
+		if( returnBlock == null )
+			return false;
+		
+		_return = returnBlock.innerText;
+		
 		return true;
+	}
+	
+	@Override
+	public ScriptRunResult run() {
+		return ScriptRunResult.succeeded("{'foo':'bar'}");
 	}
 	
 	@Override

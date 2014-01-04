@@ -50,6 +50,11 @@ public class Server {
 		_commandHandlers.put(handler.getURI(), handler);
 	}
 	
+	private void removeCommandHandler(String uri) {
+		if( _commandHandlers.containsKey(uri) )
+			_commandHandlers.remove(uri);
+	}
+	
 	public void start() {
 		
 		if( _running )
@@ -101,11 +106,15 @@ public class Server {
 		
 		if( script instanceof ApiScript ) {
 			
+			if( _workspace.apiExists(script.getName())) {
+				_workspace.removeApi(script.getName());
+				removeCommandHandler("ruk/ops/" + script.getName());
+			}
+			
 			DynamicApiCommandHandler dynamicCH = new DynamicApiCommandHandler(this);
 			dynamicCH.setApiObject((ApiScript)script);
 			registerCommandHandler(dynamicCH);
-						
-			//_workspace.addApi((ApiScript)script);
+			_workspace.addApi((ApiScript)script);
 		}
 	}
 

@@ -23,6 +23,10 @@ public class Script {
 		return _name;
 	}
 	
+	public ScriptRunResult run() {
+		return null;
+	}
+	
 	public String dump() {
 		return "";
 	}

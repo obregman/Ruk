@@ -23,4 +23,8 @@ public class Workspace {
 		if( _apis.containsKey(name) )
 			_apis.remove(name);
 	}
+	
+	public boolean apiExists(String name) {
+		return _apis.containsKey(name);
+	}
 }

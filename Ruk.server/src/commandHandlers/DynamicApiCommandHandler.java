@@ -1,7 +1,9 @@
 package commandHandlers;
 
 import java.nio.channels.SocketChannel;
+
 import scripts.ApiScript;
+import scripts.ScriptRunResult;
 import server.Server;
 
 public class DynamicApiCommandHandler extends CommandHandlerBase {
@@ -22,8 +24,14 @@ public class DynamicApiCommandHandler extends CommandHandlerBase {
 	}
 	
 	public CHResult execute(SocketChannel channel, String uri, String data) {
-				
-		return new CHResult(CHResult.ResultStatus.Success, "DynamicApi CH executed");
+		
+		ScriptRunResult result = _apiScript.run();
+		
+		if( result.success )
+			return new CHResult(CHResult.ResultStatus.Success, result.response);
+		else
+			return new CHResult(CHResult.ResultStatus.Failed, result.errorMessage);
+		
 	}
 
 }
