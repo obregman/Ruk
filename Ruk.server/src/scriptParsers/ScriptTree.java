@@ -52,6 +52,8 @@ public class ScriptTree {
 	
 	public static ScriptBlock parse(String script, int from) {
 		
+		System.out.println(script.substring(from));
+		
 		ScriptBlock block = new ScriptBlock();
 		
 		int lineStart = from;
@@ -62,6 +64,14 @@ public class ScriptTree {
 			
 			char ch = script.charAt(pos);
 			
+			if( ch == ' ' && !contentReached ) {
+				pos = TextHelper.nextRealCharacter(script, pos);
+				if( pos < 0 )
+					break;
+				lineStart = pos;
+				continue;
+			}
+			else
 			if( ch == '\t' )
 				continue;
 			else
