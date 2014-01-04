@@ -29,23 +29,28 @@ public class ScriptTree {
 	}
 		
 	public static ScriptTree buildTree(String script) {
-		ScriptBlock root = parse(script, 0);
-		if( root == null )
+		
+		ScriptBlock topBlock = parse(script, 0);
+		
+		if( topBlock == null || topBlock.innerElements.size() == 0 || !(topBlock.innerElements.get(0) instanceof ScriptBlock) )
 			return null;
 		
+		
+		ScriptBlock root = (ScriptBlock)topBlock.innerElements.get(0);
 		ScriptTree tree = new ScriptTree(root);	
 		
 		// Script type
-		String[] parts = ((ScriptBlock)root.innerElements.get(0)).prefix.split(" ");
+		String[] parts = root.prefix.split(" ");
 		if( parts.length > 0)
 			tree._type = parts[0];
+		// Script name
 		if( parts.length > 1)
-			tree._name = parts[1];		
+			tree._name = parts[1];
 		
 		return tree;
 	}
 	
-public static ScriptBlock parse(String script, int from) {
+	public static ScriptBlock parse(String script, int from) {
 		
 		ScriptBlock block = new ScriptBlock();
 		
