@@ -10,4 +10,11 @@ public class ScriptElement {
 	public String innerText;
 	public int start;
 	public int end;
+	
+	public ScriptElement get(int index) {
+		if( index > innerElements.size() ) {
+			return innerElements.get(index);
+		}
+		return null;
+	}
 }
