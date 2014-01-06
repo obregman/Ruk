@@ -6,21 +6,24 @@ import java.util.regex.Pattern;
 import core.Context;
 import core.Value;
 
-public class Print extends FunctionBase {
+public class If extends FunctionBlock {
 	
-	String _str;
+	String _varL;
+	String _varR;
+	String _condition;
+	FunctionBlock _block;
 	
-	public Print() {
+	public If() {
 		
 	}
 	
 	public FunctionBase createObj() {
-		return new Print();
+		return new If();
 	}
 	
 	@Override
 	public String getDetector() {
-		return ".*print.* ([A-z0-9]+)";
+		return ".*if.* ([A-z0-9]+).*(==|!=|<|>).*([A-z0-9]+) .*than.*";
 	}
 	
 	@Override
@@ -30,7 +33,9 @@ public class Print extends FunctionBase {
 		Matcher m = p.matcher(_code);
 		
 		if( m.matches() ) {
-			_str = m.group(1);
+			_varL = m.group(1);
+			_condition = m.group(2);
+			_varR = m.group(3);
 			
 			return true;
 		}
@@ -40,12 +45,6 @@ public class Print extends FunctionBase {
 	
 	@Override
 	public RunResults run(Context context) {
-		
-		if( context.variableExists(_str) )
-			System.out.println(context.getVariable(_str).toString());
-		else
-			System.out.println(_str);
-		
 		return RunResults.Success;
 	}
 }

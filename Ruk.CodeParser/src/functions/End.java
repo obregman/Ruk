@@ -29,7 +29,7 @@ public class End extends FunctionBase {
 	}
 	
 	@Override
-	public void run(Context context) {
-		
+	public RunResults run(Context context) {
+		return RunResults.Success;
 	}
 }

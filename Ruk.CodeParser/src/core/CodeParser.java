@@ -2,12 +2,15 @@ package core;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Stack;
 
 import functions.Assign;
 import functions.End;
 import functions.For;
 import functions.FunctionBase;
+import functions.If;
 import functions.Print;
+import functions.Return;
 
 
 public class CodeParser {
@@ -21,13 +24,15 @@ public class CodeParser {
 	private void registerFunctions() {
 		_functions.add(new Assign());
 		_functions.add(new For());
+		_functions.add(new If());
 		_functions.add(new Print());
 		_functions.add(new End());
+		_functions.add(new Return());
 	}
 	
-	public void parse(String code) {
+	public Context parse(String code) {
 		
-		List<FunctionBase> codeTree = new ArrayList<FunctionBase>();
+		List<FunctionBase> functionsList = new ArrayList<FunctionBase>();
 		List<String> lines = splitToLines(code);
 
 		for(String line:lines) {
@@ -37,10 +42,16 @@ public class CodeParser {
 				
 			}
 			else
-				codeTree.add(function);
+				functionsList.add(function);
 		}
 		
-		runCode(codeTree);
+		for(FunctionBase function:functionsList)
+			function.evaluate();
+		
+		List<FunctionBase> codeTree = buildCodeTree(functionsList);
+		
+		Context context = runCode(codeTree);
+		return context;
 	}
 	
 	private List<String> splitToLines(String code) {
@@ -74,7 +85,6 @@ public class CodeParser {
 	}
 	
 	private FunctionBase evaluateLine(String lineOfCode) {
-		//List<String> parts = breakDownLine(lineOfCode);
 		
 		boolean matchFound = false;
 		FunctionBase function = null;
@@ -109,14 +119,37 @@ public class CodeParser {
 		return match;
 	}
 	
-	private void runCode(List<FunctionBase> code) {
+	private List<FunctionBase> buildCodeTree(List<FunctionBase> functions) {
+		
+		List<FunctionBase> codeTree = new ArrayList<FunctionBase>();
+		
+		Stack<FunctionBase> functionStack = new Stack<FunctionBase>();
+		for(FunctionBase function:functions) {
+			
+			if( functionStack.size() > 0 ) {
+				
+				FunctionBase parent = functionStack.peek();
+				
+				if( !parent.insert(function) ) {
+					codeTree.add(function);
+					functionStack.pop();	
+				}
+			}
+			else
+			{
+				codeTree.add(function);
+				functionStack.add(function);
+			}
+		}
+		
+		return codeTree;
+	}
+	
+	private Context runCode(List<FunctionBase> code) {
 		
 		System.out.println("----- Executing -----");
 		
 		Context context = new Context();
-		
-		for(FunctionBase function:code)
-			function.evaluate();
 		
 		for( FunctionBase function:code) {
 			function.run(context);
@@ -126,8 +159,9 @@ public class CodeParser {
 				for(String error:context.getErrors())
 					System.out.println(error);
 				break;
-			}
-				
+			}	
 		}
+		
+		return context;
 	}
 }

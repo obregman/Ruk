@@ -1,5 +1,7 @@
 package functions;
 
+import java.util.List;
+
 import core.Context;
 
 public class FunctionBase {
@@ -20,11 +22,15 @@ public class FunctionBase {
 		return false;
 	}
 	
-	public void run(Context context) {
-		
+	public RunResults run(Context context) {
+		return RunResults.Fail;
 	}
 	
 	public FunctionBase createObj() {
 		return null;
+	}
+	
+	public boolean insert(FunctionBase function) {
+		return false;
 	}
 }

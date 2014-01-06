@@ -8,6 +8,7 @@ public class Context {
 
 	List<String> _errors = new ArrayList<String>();
 	Hashtable<String, Value> _variables = new Hashtable<String, Value>();
+	Value _return;
 	
 	public void updateVariable(String name, Value value) {
 		_variables.put(name, value);
@@ -28,4 +29,14 @@ public class Context {
 	public List<String> getErrors() {
 		return _errors;
 	}
+	
+	public void setReturnValue(Value retVal) {
+		_return = retVal;
+	}
+	
+	public Value getReturnValue() {
+		return _return;
+	}
+	
+	
 }

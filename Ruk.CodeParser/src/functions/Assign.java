@@ -22,7 +22,7 @@ public class Assign extends FunctionBase {
 	
 	@Override
 	public String getDetector() {
-		return "([A-z0-9 ]+)[=]([A-z0-9 ]+)";
+		return "([A-z][A-z0-9 ]*)[=]([A-z0-9 ]+)";
 	}
 	
 	@Override
@@ -40,11 +40,11 @@ public class Assign extends FunctionBase {
 	}
 	
 	@Override
-	public void run(Context context) {
+	public RunResults run(Context context) {
 		
 		if( !CodingRules.canBeAVariable(_var1) ) {
 			context.addError(String.format("Line %d: var1 is not a valid variable", _lineNum));
-			return;
+			return RunResults.Fail;
 		}
 		
 		if( CodingRules.isNumeric(_var2) ) {
@@ -58,5 +58,8 @@ public class Assign extends FunctionBase {
 			else
 				context.addError(String.format("Line %d: missing variable %s", _lineNum, _var2));
 		
+		return RunResults.Success;
 	}
+	
+	
 }
