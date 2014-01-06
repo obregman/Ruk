@@ -41,5 +41,9 @@ public class Print extends FunctionBase {
 	@Override
 	public void run(Context context) {
 		
+		if( context.variableExists(_str) )
+			System.out.println(context.getVariable(_str).toString());
+		else
+			System.out.println(_str);
 	}
 }

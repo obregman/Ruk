@@ -10,7 +10,7 @@ public class CodingRules {
 	}
 	
 	public static boolean canBeAVariable(String str) {
-		if( str.matches("[A-z][A-z0-9]+") )
+		if( str.matches("[A-z][A-z0-9]*") )
 			return true;
 		else
 			return false;

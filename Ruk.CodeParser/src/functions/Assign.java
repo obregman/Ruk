@@ -32,8 +32,8 @@ public class Assign extends FunctionBase {
 		Matcher m = p.matcher(_code);
 		
 		if( m.matches() ) {
-			_var1 = m.group(1);
-			_var2 = m.group(2);
+			_var1 = m.group(1).trim();
+			_var2 = m.group(2).trim();
 		}
 		
 		return false;

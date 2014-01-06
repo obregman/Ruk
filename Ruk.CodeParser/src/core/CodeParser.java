@@ -6,6 +6,7 @@ import java.util.List;
 import functions.Assign;
 import functions.For;
 import functions.FunctionBase;
+import functions.Print;
 
 
 public class CodeParser {
@@ -15,6 +16,7 @@ public class CodeParser {
 	public CodeParser() {
 		_functions.add(new Assign());
 		_functions.add(new For());
+		_functions.add(new Print());
 
 	}
 	
@@ -48,12 +50,19 @@ public class CodeParser {
 				String line = code.substring(mark, pos);
 				lines.add(line);
 				pos = TextHelper.nextRealCharacter(code, pos);
-				if( pos < 0 )
+				if( pos < 0 ) {
+					lines.add(code.substring(mark, code.length()));
 					break;
+				}
 				mark = pos;
 			}
 			else
 				pos++;				
+		}
+		
+		if( mark < pos ) {
+			String line = code.substring(mark, pos);
+			lines.add(line);
 		}
 		
 		return lines;			
@@ -84,39 +93,6 @@ public class CodeParser {
 			System.out.println("No match to line [" + lineOfCode + "]");
 		
 		return function;
-	}
-	
-	private List<String> breakDownLine(String lineOfCode) {
-		
-		List<String> parts = new ArrayList<String>();
-		
-		int mark = 0;
-		int pos = 0;
-		char ch;
-		while(true) {
-			boolean endOfWord = false;
-			if( pos >= lineOfCode.length() )
-				endOfWord = true;
-			else
-			{
-				ch = lineOfCode.charAt(pos);
-				if( ch == ' ' )
-					endOfWord = true;
-			}
-			
-			if( endOfWord ) {
-				String str = lineOfCode.substring(mark, pos);
-				parts.add(str);
-				pos = TextHelper.nextRealCharacter(lineOfCode, pos);
-				if( pos < 0 )
-					break;
-				mark = pos;
-			}
-			else
-				pos++;				
-		}
-		
-		return parts;
 	}
 	
 	private boolean detectorMatch(String regex, String lineOfCode) {

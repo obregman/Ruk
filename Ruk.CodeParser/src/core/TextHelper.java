@@ -11,6 +11,6 @@ public class TextHelper {
 				return pos;
 			pos++;
 		}
-		return -1;
+		return pos;
 	}
 }
