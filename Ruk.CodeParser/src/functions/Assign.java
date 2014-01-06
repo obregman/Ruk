@@ -22,7 +22,7 @@ public class Assign extends FunctionBase {
 	
 	@Override
 	public String getDetector() {
-		return "([A-z0-9 ]+)[=]([A-z0-9 ]+)";
+		return "([A-z][A-z0-9 ]*)[=]([A-z0-9 ]+)";
 	}
 	
 	@Override

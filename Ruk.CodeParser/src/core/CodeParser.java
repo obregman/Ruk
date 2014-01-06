@@ -7,6 +7,7 @@ import functions.Assign;
 import functions.End;
 import functions.For;
 import functions.FunctionBase;
+import functions.If;
 import functions.Print;
 
 
@@ -21,6 +22,7 @@ public class CodeParser {
 	private void registerFunctions() {
 		_functions.add(new Assign());
 		_functions.add(new For());
+		_functions.add(new If());
 		_functions.add(new Print());
 		_functions.add(new End());
 	}
