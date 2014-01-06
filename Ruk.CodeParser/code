@@ -1,4 +1,5 @@
-x = 1
-x = 6
-a = 8
-print x
+a = 1
+b = 10
+for i in a to b
+	print i
+end

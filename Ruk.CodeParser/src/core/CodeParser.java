@@ -4,6 +4,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import functions.Assign;
+import functions.End;
 import functions.For;
 import functions.FunctionBase;
 import functions.Print;
@@ -14,10 +15,14 @@ public class CodeParser {
 	List<FunctionBase> _functions = new ArrayList<FunctionBase>();
 	
 	public CodeParser() {
+		registerFunctions();
+	}
+	
+	private void registerFunctions() {
 		_functions.add(new Assign());
 		_functions.add(new For());
 		_functions.add(new Print());
-
+		_functions.add(new End());
 	}
 	
 	public void parse(String code) {
@@ -74,15 +79,17 @@ public class CodeParser {
 		boolean matchFound = false;
 		FunctionBase function = null;
 		
+		int lineNum = 0;
 		for(FunctionBase functionTempl:_functions) {
 			String regex = functionTempl.getDetector();
 			
 			boolean match = detectorMatch(regex, lineOfCode);
 			
-			if( match ) {			
+			if( match ) {		
 				System.out.println("Match [" + lineOfCode +"] to regex [" + regex + "]");
 				function = functionTempl.createObj();
-				function.setCode(lineOfCode);
+				function.setCode(lineOfCode, lineNum);
+				lineNum++;
 									
 				matchFound = true;
 				break;

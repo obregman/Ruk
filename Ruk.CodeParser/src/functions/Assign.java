@@ -43,7 +43,7 @@ public class Assign extends FunctionBase {
 	public void run(Context context) {
 		
 		if( !CodingRules.canBeAVariable(_var1) ) {
-			context.addError("Assignment: var1 is not a valid variable");
+			context.addError(String.format("Line %d: var1 is not a valid variable", _lineNum));
 			return;
 		}
 		
@@ -56,7 +56,7 @@ public class Assign extends FunctionBase {
 				context.updateVariable(_var1, new Value(lVal));
 			}
 			else
-				context.addError(String.format("Assignment: missing variable %s", _var2));
+				context.addError(String.format("Line %d: missing variable %s", _lineNum, _var2));
 		
 	}
 }
