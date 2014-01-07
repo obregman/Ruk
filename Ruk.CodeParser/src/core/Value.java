@@ -2,7 +2,7 @@ package core;
 
 public class Value {
 
-	enum Types {
+	public enum Types {
 		Long,
 		String
 	}
@@ -19,6 +19,10 @@ public class Value {
 	public Value(String s) {
 		_sVal = s;
 		_type = Types.String;
+	}
+	
+	public Types type() {
+		return _type;
 	}
 	
 	public void append(String s) {

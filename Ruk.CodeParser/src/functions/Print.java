@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import core.Context;
+import core.RegexDic;
 import core.Value;
 
 public class Print extends FunctionBase {
@@ -20,7 +21,7 @@ public class Print extends FunctionBase {
 	
 	@Override
 	public String getDetector() {
-		return ".*print.* ([A-z0-9]+)";
+		return RegexDic.print_d;
 	}
 	
 	@Override
@@ -41,10 +42,15 @@ public class Print extends FunctionBase {
 	@Override
 	public RunResults run(Context context) {
 		
+		Value val = Expression.evaluate(_str, context);
+		System.out.println(val);		
+		
+		/*
 		if( context.variableExists(_str) )
 			System.out.println(context.getVariable(_str).toString());
 		else
 			System.out.println(_str);
+		*/
 		
 		return RunResults.Success;
 	}

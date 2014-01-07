@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import core.ParsingHelper;
 import core.Context;
+import core.RegexDic;
 import core.Value;
 
 public class If extends FunctionBlock {
@@ -24,7 +25,7 @@ public class If extends FunctionBlock {
 	
 	@Override
 	public String getDetector() {
-		return ".*if.* ([A-z0-9]+) .*(==|!=|<|>).* ([A-z0-9]+) .*then.*";
+		return RegexDic.if_d;
 	}
 	
 	@Override

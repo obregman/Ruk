@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import core.ParsingHelper;
 import core.Context;
+import core.RegexDic;
 import core.Value;
 
 public class Return extends FunctionBase {
@@ -21,7 +22,7 @@ public class Return extends FunctionBase {
 	
 	@Override
 	public String getDetector() {
-		return ".*return.* ([A-z0-9]+)";
+		return RegexDic.return_d;
 	}
 	
 	@Override

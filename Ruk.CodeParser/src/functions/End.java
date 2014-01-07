@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import core.ParsingHelper;
 import core.Context;
+import core.RegexDic;
 import core.Value;
 
 public class End extends FunctionBase {
@@ -19,7 +20,7 @@ public class End extends FunctionBase {
 	
 	@Override
 	public String getDetector() {
-		return ".*end.*";
+		return RegexDic.end_d;
 	}
 	
 	@Override

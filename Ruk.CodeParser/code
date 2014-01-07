@@ -1,4 +1,8 @@
 a = 10
 for i in 1..a
-	print i*a
+	print "Hello world"
+	
+	if i == 7 then
+		print "7 boom"
+	end
 end

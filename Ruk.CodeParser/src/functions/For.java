@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import core.ParsingHelper;
 import core.Context;
+import core.RegexDic;
 import core.Value;
 
 public class For extends FunctionBlock {
@@ -24,7 +25,7 @@ public class For extends FunctionBlock {
 	
 	@Override
 	public String getDetector() {
-		return ".*for.* ([A-z0-9]+) .*in.* ([A-z0-9]+)..([A-z0-9]+)";
+		return RegexDic.for_d;
 	}
 	
 	@Override
