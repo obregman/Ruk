@@ -35,4 +35,20 @@ public class Value {
 		else
 			return _sVal;
 	}
+	
+	public boolean equals(Value other) {
+		if( _type == Types.Long ) {
+			return _lVal == other._lVal;
+		}
+		else
+			return _sVal.equals(other._sVal);
+	}
+	
+	public boolean smallerThan(Value other) {
+		if( _type == Types.Long ) {
+			return _lVal < other._lVal;
+		}
+		else
+			return false;
+	}
 }

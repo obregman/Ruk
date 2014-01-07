@@ -1,5 +1,13 @@
-a = 1
-b = 10
-for i in a to b
-	print i
+x = 10
+
+for a in 1..x
+	print a
 end
+
+
+#for a in 1..x
+	#for b in 1..x
+		#print a
+		#print b
+	#end
+#end

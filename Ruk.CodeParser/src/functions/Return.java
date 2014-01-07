@@ -3,7 +3,7 @@ package functions;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import core.CodingRules;
+import core.ParsingHelper;
 import core.Context;
 import core.Value;
 
@@ -40,7 +40,7 @@ public class Return extends FunctionBase {
 	@Override
 	public RunResults run(Context context) {
 		
-		if( !CodingRules.canBeAVariable(_retVal) ) {
+		if( !ParsingHelper.canBeAVariable(_retVal) ) {
 			context.addError(String.format("Line %d: var1 is not a valid variable", _lineNum));
 			return RunResults.Fail;
 		}

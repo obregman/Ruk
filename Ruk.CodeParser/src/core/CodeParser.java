@@ -36,6 +36,9 @@ public class CodeParser {
 		List<String> lines = splitToLines(code);
 
 		for(String line:lines) {
+			if( line.startsWith("#") ) // Remark
+				continue;
+			
 			FunctionBase function = evaluateLine(line);
 			if( function == null ) {
 				// Error - TBD
@@ -132,7 +135,8 @@ public class CodeParser {
 				
 				if( !parent.insert(function) ) {
 					codeTree.add(function);
-					functionStack.pop();	
+					functionStack.pop();
+					functionStack.add(function);
 				}
 			}
 			else

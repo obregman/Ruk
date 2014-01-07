@@ -3,7 +3,7 @@ package functions;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import core.CodingRules;
+import core.ParsingHelper;
 import core.Context;
 import core.Value;
 

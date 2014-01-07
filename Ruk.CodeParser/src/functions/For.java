@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import core.CodingRules;
+import core.ParsingHelper;
 import core.Context;
 import core.Value;
 
@@ -24,7 +24,7 @@ public class For extends FunctionBlock {
 	
 	@Override
 	public String getDetector() {
-		return ".*for.* ([A-z0-9]+) .*in.* ([A-z0-9]+) .*to.* ([A-z0-9]+)";
+		return ".*for.* ([A-z0-9]+) .*in.* ([A-z0-9]+)..([A-z0-9]+)";
 	}
 	
 	@Override
@@ -52,25 +52,30 @@ public class For extends FunctionBlock {
 		
 		if( context.variableExists(_from) ) {
 			String sFrom = context.getVariable(_from).toString();
-			if( !CodingRules.isNumeric(sFrom) ) {
+			if( !ParsingHelper.isNumeric(sFrom) ) {
 				context.addError("Invalid variable");
 				return RunResults.Fail;
 			}
 			else
 				from = Integer.parseInt(sFrom);
 		}
+		else
+			from = Integer.parseInt(_from);
 		
 		context.updateVariable(_var, new Value(from));
 		
 		if( context.variableExists(_to) ) {
 			String sTo = context.getVariable(_to).toString();
-			if( !CodingRules.isNumeric(sTo) ) {
+			if( !ParsingHelper.isNumeric(sTo) ) {
 				context.addError("Invalid variable");
 				return RunResults.Fail;
 			}
 			else
 				to = Integer.parseInt(sTo);
 		}
+		else
+			to = Integer.parseInt(_to);
+
 		
 		while(true) {
 			

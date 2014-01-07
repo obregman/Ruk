@@ -1,6 +1,6 @@
 package core;
 
-public class CodingRules {
+public class ParsingHelper {
 
 	public static boolean isNumeric(String str) {
 		if( str.matches("[0-9]+") )

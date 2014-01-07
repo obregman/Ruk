@@ -22,6 +22,10 @@ public class FunctionBlock extends FunctionBase {
 	
 	@Override
 	public boolean insert(FunctionBase function) {
+		
+		if( _functions.size() > 0 && _functions.get(_functions.size()-1).insert(function))
+			return true;
+		
 		if( function instanceof End )			
 			return false;
 		else

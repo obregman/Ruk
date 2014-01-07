@@ -3,7 +3,7 @@ package functions;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import core.CodingRules;
+import core.ParsingHelper;
 import core.Context;
 import core.Value;
 
@@ -42,12 +42,12 @@ public class Assign extends FunctionBase {
 	@Override
 	public RunResults run(Context context) {
 		
-		if( !CodingRules.canBeAVariable(_var1) ) {
+		if( !ParsingHelper.canBeAVariable(_var1) ) {
 			context.addError(String.format("Line %d: var1 is not a valid variable", _lineNum));
 			return RunResults.Fail;
 		}
 		
-		if( CodingRules.isNumeric(_var2) ) {
+		if( ParsingHelper.isNumeric(_var2) ) {
 			context.updateVariable(_var1, new Value(Long.parseLong(_var2)));
 		}
 		else
