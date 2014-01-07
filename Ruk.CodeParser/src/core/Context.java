@@ -6,6 +6,12 @@ import java.util.List;
 
 public class Context {
 
+	public enum ResultTypes {
+		Success,
+		Error
+	}
+	
+	ResultTypes _result;
 	List<String> _errors = new ArrayList<String>();
 	Hashtable<String, Value> _variables = new Hashtable<String, Value>();
 	Value _return;
@@ -36,6 +42,14 @@ public class Context {
 	
 	public Value getReturnValue() {
 		return _return;
+	}
+	
+	public void setResult(ResultTypes result) {
+		_result = result;
+	}
+	
+	public ResultTypes result() {
+		return _result;
 	}
 	
 	

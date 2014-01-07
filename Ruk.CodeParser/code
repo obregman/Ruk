@@ -1,13 +1,4 @@
-x = 10
-
-for a in 1..x
-	print a
+a = 10
+for i in 1..a
+	print i*a
 end
-
-
-#for a in 1..x
-	#for b in 1..x
-		#print a
-		#print b
-	#end
-#end
