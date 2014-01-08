@@ -4,5 +4,9 @@ for i in 1..a
 	
 	if i == 7 then
 		print "7 boom"
+		for j in 4..7
+			print j
+		end
+		n = j
 	end
 end

@@ -32,28 +32,29 @@ public class CodeParser {
 	
 	public Context parse(String code) {
 		
+		Context context = new Context();
+		
 		List<FunctionBase> functionsList = new ArrayList<FunctionBase>();
 		List<String> lines = splitToLines(code);
 
+		int lineNum = 1;
 		for(String line:lines) {
 			if( line.startsWith("#") ) // Remark
 				continue;
 			
-			FunctionBase function = evaluateLine(line);
-			if( function == null ) {
-				// Error - TBD
-				
+			FunctionBase function = evaluateLine(context, lineNum, line);
+			if( function == null || context.errorState() == true ) {
+				return context;				
 			}
 			else
 				functionsList.add(function);
+			
+			lineNum++;
 		}
-		
-		for(FunctionBase function:functionsList)
-			function.evaluate();
 		
 		List<FunctionBase> codeTree = buildCodeTree(functionsList);
 		
-		Context context = runCode(codeTree);
+		runCode(context, codeTree);
 		return context;
 	}
 	
@@ -87,12 +88,11 @@ public class CodeParser {
 		return lines;			
 	}
 	
-	private FunctionBase evaluateLine(String lineOfCode) {
+	private FunctionBase evaluateLine(Context context, int lineNum, String lineOfCode) {
 		
 		boolean matchFound = false;
 		FunctionBase function = null;
 		
-		int lineNum = 0;
 		for(FunctionBase functionTempl:_functions) {
 			String regex = functionTempl.getDetector();
 			
@@ -102,15 +102,21 @@ public class CodeParser {
 				System.out.println("Match [" + lineOfCode +"] to regex [" + regex + "]");
 				function = functionTempl.createObj();
 				function.setCode(lineOfCode, lineNum);
-				lineNum++;
-									
+				boolean evaluationSucceeded = function.evaluate();
+				if( !evaluationSucceeded ) {					
+					break;
+				}
+					
 				matchFound = true;
 				break;
 			}
 		}
 		
-		if(!matchFound)
+		if(!matchFound) {
 			System.out.println("No match to line [" + lineOfCode + "]");
+			context.setErrorState(true);
+			context.addError(String.format("Line %d: cannot evaluate line [%s]", lineNum, lineOfCode));
+		}
 		
 		return function;
 	}
@@ -149,11 +155,9 @@ public class CodeParser {
 		return codeTree;
 	}
 	
-	private Context runCode(List<FunctionBase> code) {
+	private Context runCode(Context context, List<FunctionBase> code) {
 		
 		System.out.println("----- Executing -----");
-		
-		Context context = new Context();
 		
 		for( FunctionBase function:code) {
 			function.run(context);

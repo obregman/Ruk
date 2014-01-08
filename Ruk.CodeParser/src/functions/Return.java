@@ -34,8 +34,10 @@ public class Return extends FunctionBase {
 		if( m.matches() ) {
 			_retVal = m.group(1).trim();
 		}
+		else
+			return false;
 		
-		return false;
+		return true;
 	}
 	
 	@Override

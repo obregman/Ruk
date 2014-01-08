@@ -36,8 +36,10 @@ public class Assign extends FunctionBase {
 			_var1 = m.group(1).trim();
 			_var2 = m.group(2).trim();
 		}
+		else
+			return false;
 		
-		return false;
+		return true;
 	}
 	
 	@Override
@@ -48,16 +50,11 @@ public class Assign extends FunctionBase {
 			return RunResults.Fail;
 		}
 		
-		if( ParsingHelper.isNumeric(_var2) ) {
-			context.updateVariable(_var1, new Value(Long.parseLong(_var2)));
-		}
+		Value val = Expression.evaluate(_var2, context);
+		if( val == null )
+			context.addError(String.format("Line %d: error - invalid variable %s", _lineNum, _var2));	
 		else
-			if( context.variableExists(_var2) ) {
-				long lVal = context.getVariable(_var2).val();
-				context.updateVariable(_var1, new Value(lVal));
-			}
-			else
-				context.addError(String.format("Line %d: missing variable %s", _lineNum, _var2));
+			context.updateVariable(_var1, val);
 		
 		return RunResults.Success;
 	}

@@ -31,12 +31,12 @@ public class Print extends FunctionBase {
 		Matcher m = p.matcher(_code);
 		
 		if( m.matches() ) {
-			_str = m.group(1);
-			
-			return true;
+			_str = m.group(1);			
 		}
+		else
+			return false;
 		
-		return false;
+		return true;
 	}
 	
 	@Override

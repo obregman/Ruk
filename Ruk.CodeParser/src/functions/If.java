@@ -38,11 +38,11 @@ public class If extends FunctionBlock {
 			_varL = m.group(1);
 			_condition = m.group(2);
 			_varR = m.group(3);
-			
-			return true;
 		}
+		else
+			return false;
 		
-		return false;
+		return true;
 	}
 	
 	@Override

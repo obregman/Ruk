@@ -13,8 +13,12 @@ public class Context {
 	
 	ResultTypes _result;
 	List<String> _errors = new ArrayList<String>();
+	boolean _errorState = false;
 	Hashtable<String, Value> _variables = new Hashtable<String, Value>();
 	Value _return;
+	
+	public Context() {
+	}
 	
 	public void updateVariable(String name, Value value) {
 		_variables.put(name, value);
@@ -50,6 +54,14 @@ public class Context {
 	
 	public ResultTypes result() {
 		return _result;
+	}
+	
+	public void setErrorState(boolean errorState) {
+		_errorState = errorState;
+	}
+	
+	public boolean errorState() {
+		return _errorState;
 	}
 	
 	

@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import core.Context;
+import core.ParsingHelper;
 import core.RegexDic;
 import core.Value;
 import core.Value.Types;
@@ -14,6 +15,11 @@ public class Expression {
 		
 		Value val = null;
 		
+		// Is numeric
+		if( ParsingHelper.isNumeric(expr) ) {
+			val = new Value(Integer.parseInt(expr));
+		}
+		else
 		// Is a variable?
 		if( context.variableExists(expr) )	{
 			val = context.getVariable(expr);				

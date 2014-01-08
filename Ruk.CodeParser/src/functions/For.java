@@ -38,11 +38,11 @@ public class For extends FunctionBlock {
 			_var = m.group(1);
 			_from = m.group(2);
 			_to = m.group(3);
-			
-			return true;
 		}
+		else
+			return false;
 		
-		return false;
+		return true;
 	}
 	
 	@Override

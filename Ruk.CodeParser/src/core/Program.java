@@ -23,7 +23,13 @@ public class Program {
 	    }
 	    
 	    CodeParser parser = new CodeParser();
-	    parser.parse(content);
+	    Context context = parser.parse(content);
+	    
+	    if (context.errorState()) {
+	    	System.out.println("!!! Error !!!");
+	    	for(String err:context._errors)
+	    		System.out.println(err);
+	    }
 	}
 
 }
