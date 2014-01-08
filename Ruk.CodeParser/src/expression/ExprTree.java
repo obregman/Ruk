@@ -115,7 +115,7 @@ public class ExprTree {
 	}
 	
 	private static boolean isAlphanumeric(char ch) {
-		return (ch > 'A' && ch < 'z' || ch > '0' && ch < '9');
+		return (ch >= 'A' && ch <= 'z' || ch >= '0' && ch <= '9');
 	}
 	
 	private static boolean isAlphanumeric(String str) {

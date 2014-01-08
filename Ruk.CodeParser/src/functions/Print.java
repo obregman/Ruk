@@ -48,13 +48,6 @@ public class Print extends FunctionBase {
 		Value val = Expression.evaluate(_str, context);
 		System.out.println(val);		
 		
-		/*
-		if( context.variableExists(_str) )
-			System.out.println(context.getVariable(_str).toString());
-		else
-			System.out.println(_str);
-		*/
-		
 		return RunResults.Success;
 	}
 }

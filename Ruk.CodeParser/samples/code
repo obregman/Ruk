@@ -1,1 +1,2 @@
-print 44 - 3
+a = "hello"
+print a + " world"

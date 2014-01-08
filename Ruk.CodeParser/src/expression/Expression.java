@@ -27,6 +27,12 @@ public class Expression {
 		if( context.variableExists(expr) )	{
 			val = context.getVariable(expr);				
 		}
+		// String
+		else
+		if( expr.matches("[A-z0-9]+"))
+		{
+			val = new Value(expr);
+		}
 		// String in quotes
 		else
 		{
