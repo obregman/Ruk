@@ -1,4 +1,4 @@
-package functions_base;
+package expression;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ public class Expression {
 				// Break into parts
 				List<String> parts = new ArrayList<String>();
 				int pos = 0;
-				while(true) {
+				while(pos < expr.length()) {
 					
 					int start = TextHelper.nextRealCharacter(expr, pos);
 					if( start < 0 )
@@ -56,7 +56,7 @@ public class Expression {
 					String part = expr.substring(start, end);
 					parts.add(part);
 					
-					
+					pos = end;					
 				}
 				
 			}			
@@ -68,12 +68,16 @@ public class Expression {
 	private static int nextEndCharacter(String text, int from) {
 		int pos = from;
 		while(pos < text.length()) {
-			char ch = text.charAt(pos);
-			if( ch < 'A' && ch > 'z' && ch < '0' && ch > '9' )
+			char ch = text.charAt(pos);			
+			if( !isAlphanumeric(ch) )
 				return pos;
 			pos++;
 		}
 		return pos;
+	}
+	
+	private static boolean isAlphanumeric(char ch) {
+		return (ch > 'A' && ch < 'z' || ch > '0' && ch < '9');
 	}
 
 }

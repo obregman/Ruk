@@ -8,7 +8,7 @@ public class Program {
 
 	public static void main(String[] args) {
 		
-		String filename = "code";
+		String filename = "samples/code";
 		String content = null;
 	    File file = new File(filename);
 	    try {

@@ -7,7 +7,7 @@ import core.ParsingHelper;
 import core.Context;
 import core.RegexDic;
 import core.Value;
-import functions_base.Expression;
+import expression.Expression;
 import functions_base.FunctionBase;
 import functions_base.RunResults;
 
