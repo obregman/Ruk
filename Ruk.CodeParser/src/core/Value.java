@@ -25,8 +25,21 @@ public class Value {
 		return _type;
 	}
 	
-	public void append(String s) {
+	public Value add(String s) {
 		_sVal += s;
+		return this;
+	}
+	
+	public Value add(Value val) {
+		if (_type != val._type)
+			return this;
+		
+		if( _type == Types.String )
+			_sVal += val._sVal;
+		else
+			if( _type == Types.Long )
+				_lVal += val._lVal;
+		return this;
 	}
 	
 	public long val() {
@@ -54,5 +67,53 @@ public class Value {
 		}
 		else
 			return false;
+	}
+	
+	public static Value add(Value v1, Value v2) {
+		if (v1._type != v2._type)
+			return null;
+		
+		if( v1._type == Types.String )
+			return new Value(v1._sVal + v2._sVal);
+		else
+			if( v1._type == Types.Long )
+				return new Value(v1._lVal + v2._lVal);
+		return null;
+	}
+	
+	public static Value subtract(Value v1, Value v2) {
+		if (v1._type != v2._type)
+			return null;
+		
+		if( v1._type == Types.String )
+			return null;
+		else
+			if( v1._type == Types.Long )
+				return new Value(v1._lVal - v2._lVal);
+		return null;
+	}
+	
+	public static Value mult(Value v1, Value v2) {
+		if (v1._type != v2._type)
+			return null;
+		
+		if( v1._type == Types.String )
+			return null;
+		else
+			if( v1._type == Types.Long )
+				return new Value(v1._lVal * v2._lVal);
+		return null;
+	}
+	
+	public static Value div(Value v1, Value v2) {
+		if (v1._type != v2._type)
+			return null;
+		
+		if( v1._type == Types.String )
+			return null;
+		else
+			if( v1._type == Types.Long )
+				return new Value(v1._lVal / v2._lVal);
+		return null;
 	}
 }

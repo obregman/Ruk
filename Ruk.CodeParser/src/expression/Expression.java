@@ -41,43 +41,14 @@ public class Expression {
 			else
 			{
 				// Composite expression (e.g. "hello " + str) - break down
-				// Break into parts
-				List<String> parts = new ArrayList<String>();
-				int pos = 0;
-				while(pos < expr.length()) {
-					
-					int start = TextHelper.nextRealCharacter(expr, pos);
-					if( start < 0 )
-						break;
-					int end = nextEndCharacter(expr, start + 1);
-					if( end < 0 )
-						break;
-					
-					String part = expr.substring(start, end);
-					parts.add(part);
-					
-					pos = end;					
-				}
-				
+				ExprTree tree = ExprTree.generateTree(expr);
+				val = tree.evaluate(context);
 			}			
 		}
 		
 		return val;		
 	}
 	
-	private static int nextEndCharacter(String text, int from) {
-		int pos = from;
-		while(pos < text.length()) {
-			char ch = text.charAt(pos);			
-			if( !isAlphanumeric(ch) )
-				return pos;
-			pos++;
-		}
-		return pos;
-	}
 	
-	private static boolean isAlphanumeric(char ch) {
-		return (ch > 'A' && ch < 'z' || ch > '0' && ch < '9');
-	}
 
 }
