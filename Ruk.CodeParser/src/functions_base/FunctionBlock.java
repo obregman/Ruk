@@ -1,13 +1,14 @@
-package functions;
+package functions_base;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import core.Context;
+import functions.End;
 
 public class FunctionBlock extends FunctionBase {
 
-	List<FunctionBase> _functions = new ArrayList<FunctionBase>();
+	protected List<FunctionBase> _functions = new ArrayList<FunctionBase>();
 	
 	public void addFunctions(FunctionBase function) {
 		_functions.add(function);

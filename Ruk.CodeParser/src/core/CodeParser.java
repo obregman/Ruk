@@ -7,10 +7,10 @@ import java.util.Stack;
 import functions.Assign;
 import functions.End;
 import functions.For;
-import functions.FunctionBase;
 import functions.If;
 import functions.Print;
 import functions.Return;
+import functions_base.FunctionBase;
 
 
 public class CodeParser {
@@ -39,8 +39,11 @@ public class CodeParser {
 
 		int lineNum = 1;
 		for(String line:lines) {
-			if( line.startsWith("#") ) // Remark
+			if( line.length() == 0 || line.startsWith("#") ) { 
+				// Remark
+				lineNum++;
 				continue;
+			}
 			
 			FunctionBase function = evaluateLine(context, lineNum, line);
 			if( function == null || context.errorState() == true ) {
