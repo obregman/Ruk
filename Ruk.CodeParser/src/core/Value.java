@@ -1,15 +1,19 @@
 package core;
 
+import java.util.List;
+
 public class Value {
 
 	public enum Types {
 		Long,
-		String
+		String,
+		List
 	}
 	
 	Types _type;
 	long _lVal;
 	String _sVal;
+	List<Value> _list;
 
 	public Value(long l) {
 		_lVal = l;
@@ -19,6 +23,11 @@ public class Value {
 	public Value(String s) {
 		_sVal = s;
 		_type = Types.String;
+	}
+
+	public Value(List<Value> list) {
+		_list = list;
+		_type = Types.List;
 	}
 	
 	public Types type() {
@@ -70,14 +79,17 @@ public class Value {
 	}
 	
 	public static Value add(Value v1, Value v2) {
-		if (v1._type != v2._type)
-			return null;
-		
-		if( v1._type == Types.String )
+		if( v1._type == Types.String && v2._type == Types.String)
 			return new Value(v1._sVal + v2._sVal);
 		else
-			if( v1._type == Types.Long )
+			if( v1._type == Types.Long && v2._type == Types.Long )
 				return new Value(v1._lVal + v2._lVal);
+			else
+				if( v1._type == Types.String && v2._type == Types.Long )
+					return new Value(v1._sVal + String.valueOf(v2._lVal));
+				else
+					if( v2._type == Types.String && v1._type == Types.Long )
+						return new Value(String.valueOf(v1._lVal) + v2._sVal);
 		return null;
 	}
 	

@@ -61,7 +61,16 @@ public class TestExpression {
 	}
 	
 	@Test
-	public void stringExpression() {
+	public void stringExpression1() {
+		Context context = new Context();
+		Value result = Expression.evaluate("\"hello world\"", context);
+		
+		if( !result.toString().equals("hello world") )
+			fail("Expression [hello world] evaluation failed");
+	}
+	
+	@Test
+	public void stringExpression2() {
 		Context context = new Context();
 		context.updateVariable("a", new Value("hello "));
 		context.updateVariable("b", new Value("world"));
@@ -69,6 +78,15 @@ public class TestExpression {
 		
 		if( !result.toString().equals("hello world") )
 			fail("Expression [hello + world] evaluation failed");
+	}
+	
+	@Test
+	public void stringExpression3() {
+		Context context = new Context();
+		Value result = Expression.evaluate("\"check\" + \" \" + \"this\" + \" \" + \"out\"", context);
+		
+		if( !result.toString().equals("check this out") )
+			fail("Expression [check + this + out] evaluation failed");
 	}
 
 }
