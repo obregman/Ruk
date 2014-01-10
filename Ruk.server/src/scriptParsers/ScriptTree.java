@@ -56,6 +56,10 @@ public class ScriptTree {
 		
 		ScriptBlock block = new ScriptBlock();
 		
+		int startOfText = TextHelper.nextRealCharacter(script, from);
+		if( startOfText > 0 )
+			from = startOfText;
+		
 		int lineStart = from;
 		boolean contentReached = false;
 		
@@ -95,6 +99,7 @@ public class ScriptTree {
 				// Open block
 				ScriptBlock innerBlock = parse(script, pos + 1);
 				innerBlock.prefix = script.substring(lineStart, pos - 1);
+				innerBlock.innerText = script.substring(innerBlock.start, innerBlock.end);
 				block.innerElements.add(innerBlock);
 				pos = TextHelper.nextRealCharacter(script, innerBlock.end + 2);
 				if( pos < 0 )
@@ -105,7 +110,10 @@ public class ScriptTree {
 			else
 			if( ch == '}') {
 				block.start = from;
-				block.end = pos - 1;
+				if( pos <= from )
+					block.end = from;
+				else
+					block.end = pos - 1;
 				break;
 			}
 			else

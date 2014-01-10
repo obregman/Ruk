@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Ruk.server" basedir="." default="jar">
     <property name="source.dir"     value="src"/>
+	<property name="CodeParser.lib"        value="..\Ruk.CodeParser\jar"/>
     <property name="infra.lib"        value="..\Ruk.infra\jar"/>
     <property name="class.dir"	     value="bin"/>
     <property name="jar.dir"        value="jar"/>
@@ -11,6 +12,9 @@
         <fileset dir="${infra.lib}">
             <include name="*.jar"/>
         </fileset>
+    	<fileset dir="${CodeParser.lib}">
+	            <include name="*.jar"/>
+	        </fileset>
     </path>
 
     <target name="clean" description="delete old files">

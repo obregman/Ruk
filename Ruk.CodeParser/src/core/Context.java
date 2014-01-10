@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+import functions_base.FunctionBase;
+
 public class Context {
 
 	public enum ResultTypes {
@@ -11,6 +13,7 @@ public class Context {
 		Error
 	}
 	
+	public List<FunctionBase> codeTree;
 	ResultTypes _result;
 	List<String> _errors = new ArrayList<String>();
 	boolean _errorState = false;
@@ -33,6 +36,7 @@ public class Context {
 	}
 	
 	public void addError(String error) {
+		_errorState = true;
 		_errors.add(error);
 	}
 	

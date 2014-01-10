@@ -4,11 +4,9 @@ import java.io.FileReader;
 import java.io.IOException;
 
 
-public class Program {
-
-	public static void main(String[] args) {
-		
-		String filename = "samples/code";
+public class TextFileReader {
+	
+	public static String readFile(String filename) {
 		String content = null;
 	    File file = new File(filename);
 	    try {
@@ -21,16 +19,6 @@ public class Program {
 	    catch (IOException e) {
 	        e.printStackTrace();
 	    }
-	    
-	    CodeParser parser = new CodeParser();
-	    ParsedCode parsedCode = parser.parse(content);
-	    Context context = parser.execute(parsedCode);
-	    
-	    if (context.errorState()) {
-	    	System.out.println("!!! Error !!!");
-	    	for(String err:context._errors)
-	    		System.out.println(err);
-	    }
+	    return content;
 	}
-
 }

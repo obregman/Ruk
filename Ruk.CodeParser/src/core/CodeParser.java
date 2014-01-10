@@ -30,9 +30,13 @@ public class CodeParser {
 		_functions.add(new Return());
 	}
 	
-	public Context parse(String code) {
+	public ParsedCode parse(String code) {
 		
 		Context context = new Context();
+		ParsedCode parsedCode = new ParsedCode();
+		
+		if( code == null || code.isEmpty() )
+			return parsedCode;
 		
 		List<FunctionBase> functionsList = new ArrayList<FunctionBase>();
 		List<String> lines = splitToLines(code);
@@ -47,7 +51,9 @@ public class CodeParser {
 			
 			FunctionBase function = evaluateLine(context, lineNum, line);
 			if( function == null || context.errorState() == true ) {
-				return context;				
+				parsedCode.setParsingFailed(true);
+				if( context.getErrors().size() > 0)
+					parsedCode.setParsingError(context.getErrors().get(0));
 			}
 			else
 				functionsList.add(function);
@@ -55,10 +61,23 @@ public class CodeParser {
 			lineNum++;
 		}
 		
-		List<FunctionBase> codeTree = buildCodeTree(functionsList);
+		if( !parsedCode.parsingFailed() ) {
+			List<FunctionBase> codeTree = buildCodeTree(functionsList);
+			if( codeTree == null )
+				parsedCode.setParsingFailed(true);
+			else
+				parsedCode.setCodeTree(codeTree); 
+		}
 		
-		runCode(context, codeTree);
-		return context;
+		return parsedCode;
+	}
+	
+	public Context execute(ParsedCode code) {
+		
+		if( code == null || code.codeTree() == null)
+			return new Context();
+		
+		return runCode(code);
 	}
 	
 	private List<String> splitToLines(String code) {
@@ -158,11 +177,13 @@ public class CodeParser {
 		return codeTree;
 	}
 	
-	private Context runCode(Context context, List<FunctionBase> code) {
+	private Context runCode(ParsedCode code) {
 		
 		System.out.println("----- Executing -----");
 		
-		for( FunctionBase function:code) {
+		Context context = new Context();
+		
+		for( FunctionBase function:code.codeTree()) {
 			function.run(context);
 			
 			if( context.getErrors().size() > 0 ) {

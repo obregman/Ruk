@@ -3,6 +3,9 @@ package scripts;
 import java.util.ArrayList;
 import java.util.List;
 
+import core.CodeParser;
+import core.Context;
+import core.ParsedCode;
 import scriptParsers.ScriptBlock;
 import scriptParsers.ScriptTree;
 import scripts.ApiScript;
@@ -10,8 +13,8 @@ import scripts.ApiScript;
 public class ApiScript extends Script {
 	
 	List<String> _inputParameters = new ArrayList<String>();
-	String _do;
-	String _return;
+	ParsedCode _do;
+	ParsedCode _return;
 	
 	public ApiScript() {
 		super("api");
@@ -20,7 +23,10 @@ public class ApiScript extends Script {
 	@Override
 	public boolean parse(ScriptTree tree) {
 		
+		CodeParser parser = new CodeParser();
+		
 		_name = tree.getName();
+		
 		
 		ScriptBlock inputBlock = tree.getRoot().findBlock("input");
 		if( inputBlock == null )
@@ -37,20 +43,35 @@ public class ApiScript extends Script {
 		if( doBlock == null )
 			return false;
 		
-		_do = doBlock.innerText;
+		String doCode = doBlock.innerText;
+		_do = parser.parse(doCode);
 		
 		ScriptBlock returnBlock = tree.getRoot().findBlock("return");
 		if( returnBlock == null )
 			return false;
 		
-		_return = returnBlock.innerText;
+		String returnCode = returnBlock.innerText;
+		_return = parser.parse(returnCode);
 		
 		return true;
 	}
 	
 	@Override
 	public ScriptRunResult run() {
-		return ScriptRunResult.succeeded("{'foo':'bar'}");
+		CodeParser parser = new CodeParser();
+		// Run do
+		Context doResult = parser.execute(_do);
+		if( doResult.errorState() ) {
+			return ScriptRunResult.failed("{'foo':'bar'}");
+		}
+		// Run return
+		Context returnResult = parser.execute(_return);
+		if( returnResult.errorState() ) {
+			return ScriptRunResult.failed("{'foo':'bar'}");
+		}
+		else
+			return ScriptRunResult.succeeded(String.format("{'return':'%s'}", returnResult.getReturnValue().toString()));
+		
 	}
 	
 	@Override
