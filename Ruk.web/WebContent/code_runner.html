@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/angular.min.js"></script>
+<meta charset="ISO-8859-1">
+<title>Ruk code runner</title>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	  		  
+	$('#run').click(function(){ 
+		
+	     $.ajax({ 
+	         type: "post",
+	         dataType: "json",
+	         url: "http://127.0.0.1:23111/ruk/ops/add-script",
+	         success: function(data){        
+	            alert(data);
+	         }
+	     });
+	});
+	  
+});
+</script>
+</head>
+<body>
+
+<form>
+	<textarea rows="6" cols="60" id="code"></textarea><p>
+	<textarea rows="6" cols="60" id="result"></textarea><p>
+	<button id="run">Run</button>
+</form>
+
+</body>
+</html>
