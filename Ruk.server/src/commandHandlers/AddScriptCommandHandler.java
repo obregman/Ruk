@@ -26,6 +26,9 @@ public class AddScriptCommandHandler extends CommandHandlerBase {
 		_scriptHandlers.put(apiScript.getType(), apiScript);
 	}
 	
+	/**
+	 * Executes the AddScript command handler
+	 */
 	public CHResult execute(SocketChannel channel, String uri, String data) {
 
 		ScriptTree tree = ScriptTree.buildTree(data);
@@ -42,9 +45,8 @@ public class AddScriptCommandHandler extends CommandHandlerBase {
 				
 				if( success ) {
 					_server.addScript(scriptObj);
+					return new CHResult(CHResult.ResultStatus.Success, "Api script detected - " + scriptObj.getName() + " [" + scriptObj.dump() + "]");
 				}
-				
-				return new CHResult(CHResult.ResultStatus.Success, "Api script detected - " + scriptObj.getName() + " [" + scriptObj.dump() + "]");
 			}
 		}
 			

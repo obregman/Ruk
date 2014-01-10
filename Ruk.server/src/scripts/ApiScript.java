@@ -45,6 +45,8 @@ public class ApiScript extends Script {
 		
 		String doCode = doBlock.innerText;
 		_do = parser.parse(doCode);
+		if( _do.parsingFailed() )
+			return false;
 		
 		ScriptBlock returnBlock = tree.getRoot().findBlock("return");
 		if( returnBlock == null )
@@ -52,6 +54,8 @@ public class ApiScript extends Script {
 		
 		String returnCode = returnBlock.innerText;
 		_return = parser.parse(returnCode);
+		if( _return.parsingFailed() )
+			return false;
 		
 		return true;
 	}

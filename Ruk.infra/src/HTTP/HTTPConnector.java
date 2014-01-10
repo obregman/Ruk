@@ -111,31 +111,6 @@ public class HTTPConnector {
     	    "Content-Type", "application/x-www-form-urlencoded" );
     	urlc.setRequestMethod("DELETE");
     	urlc.connect();
-
-    	/*
-        HttpURLConnection    urlc = (HttpURLConnection) (new URL(address)).openConnection();
-        urlc.setRequestMethod("DELETE");
-        urlc.setDoOutput(true);
-        urlc.setDoInput(true);
-        urlc.setUseCaches(false);
-        urlc.setAllowUserInteraction(false);
-        urlc.setRequestProperty("Content-type", "text/xml; charset=" + "UTF-8");
-        
-        OutputStream out = null;
-        out = urlc.getOutputStream();
-        Writer writer = new OutputStreamWriter(out, "UTF-8");
-        writer.write(dataToBePosted);
-        writer.close();
-        out.close();
-        
-        BufferedReader bfreader = new BufferedReader(new InputStreamReader(urlc.getInputStream())); 
-        StringBuilder builder = new StringBuilder(100);
-        String line = "";
-        while ((line = bfreader.readLine()) != null) {
-            builder.append(line);
-        }
-        bfreader.close();
-        */
     }
     
 }
