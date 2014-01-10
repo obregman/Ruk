@@ -29,28 +29,26 @@ public class Expression {
 		}
 		// String
 		else
-		if( expr.matches("[A-z0-9]+"))
+		if( expr.matches("[A-z0-9 ]+"))
 		{
 			val = new Value(expr);
 		}
-		// String in quotes
+		/*
+		else	// String in quotes
+		if( expr.matches(RegexDic.quotedString) ) {
+			Pattern p = Pattern.compile(RegexDic.quotedString);
+			Matcher m = p.matcher(expr);
+			if( m.matches() ) {
+				String str = m.group(1);
+				val = new Value(str);
+			}
+		}*/
 		else
 		{
-			if( expr.matches(RegexDic.quotedString) ) {
-				Pattern p = Pattern.compile(RegexDic.quotedString);
-				Matcher m = p.matcher(expr);
-				if( m.matches() ) {
-					String str = m.group(1);
-					val = new Value(str);
-				}
-			}
-			else
-			{
-				// Composite expression (e.g. "hello " + str) - break down
-				ExprTree tree = ExprTree.generateTree(expr);
-				val = tree.evaluate(context);
-			}			
-		}
+			// Composite expression (e.g. "hello " + str) - break down
+			ExprTree tree = ExprTree.generateTree(expr);
+			val = tree.evaluate(context);
+		}			
 		
 		return val;		
 	}

@@ -60,27 +60,6 @@ public class ExprTree {
 		return val;
 	}
 	
-	private static List<String> breakExpr(String expr) {
-		// Break into parts
-		List<String> parts = new ArrayList<String>();
-		int pos = 0;
-		while(pos < expr.length()) {
-			
-			int start = TextHelper.nextRealCharacter(expr, pos);
-			if( start < 0 )
-				break;
-			int end = nextEndCharacter(expr, start + 1);
-			if( end < 0 )
-				break;
-			
-			String part = expr.substring(start, end);
-			parts.add(part);
-			
-			pos = end;					
-		}
-		return parts;
-	}
-	
 	private void makeTree(String expr) {
 		
 		List<String> parts = ExprTree.breakExpr(expr);
@@ -103,6 +82,42 @@ public class ExprTree {
 		}
 	}
 	
+	private static List<String> breakExpr(String expr) {
+		// Break into parts
+		List<String> parts = new ArrayList<String>();
+		int pos = 0;
+		
+		while(pos < expr.length()) {
+			
+			int start = TextHelper.nextRealCharacter(expr, pos);
+			if( start < 0 )
+				break;
+			
+			if( expr.charAt(start) == '\"') {
+				// find end quotes
+				int endQuotes = nextCharacter('\"', expr, start + 1);
+				if( endQuotes > 0 ) {
+					String part = expr.substring(start + 1, endQuotes);
+					parts.add(part);
+					pos = endQuotes + 1;
+				}
+				else
+					break;
+			}
+			else
+			{
+				int end = nextEndCharacter(expr, start + 1);
+				if( end < 0 )
+					break;
+				
+				String part = expr.substring(start, end);
+				parts.add(part);
+				pos = end;		
+			}
+		}
+		return parts;
+	}
+	
 	private static int nextEndCharacter(String text, int from) {
 		int pos = from;
 		while(pos < text.length()) {
@@ -119,11 +134,18 @@ public class ExprTree {
 	}
 	
 	private static boolean isAlphanumeric(String str) {
-		return str.matches("[A-z0-9]+");
+		return str.matches("[A-z0-9 ]+");
 	}
 	
 	private static boolean isValidOperator(String str) {
 		return str.matches("[\\+\\-/\\*]");
+	}
+	
+	private static int nextCharacter(char ch, String text, int from) {
+		for(int pos = from; pos < text.length(); pos++)
+			if(text.charAt(pos) == ch)
+				return pos;
+		return -1;
 	}
 
 }
