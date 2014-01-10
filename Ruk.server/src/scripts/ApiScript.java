@@ -14,7 +14,6 @@ public class ApiScript extends Script {
 	
 	List<String> _inputParameters = new ArrayList<String>();
 	ParsedCode _do;
-	ParsedCode _return;
 	
 	public ApiScript() {
 		super("api");
@@ -48,15 +47,6 @@ public class ApiScript extends Script {
 		if( _do.parsingFailed() )
 			return false;
 		
-		ScriptBlock returnBlock = tree.getRoot().findBlock("return");
-		if( returnBlock == null )
-			return false;
-		
-		String returnCode = returnBlock.innerText;
-		_return = parser.parse(returnCode);
-		if( _return.parsingFailed() )
-			return false;
-		
 		return true;
 	}
 	
@@ -68,14 +58,8 @@ public class ApiScript extends Script {
 		if( doResult.errorState() ) {
 			return ScriptRunResult.failed("{'foo':'bar'}");
 		}
-		// Run return
-		Context returnResult = parser.execute(_return);
-		if( returnResult.errorState() ) {
-			return ScriptRunResult.failed("{'foo':'bar'}");
-		}
 		else
-			return ScriptRunResult.succeeded(String.format("{'return':'%s'}", returnResult.getReturnValue().toString()));
-		
+			return ScriptRunResult.succeeded(String.format("{'return':'%s'}", doResult.getReturnValue().toString()));
 	}
 	
 	@Override
