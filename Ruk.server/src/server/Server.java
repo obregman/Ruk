@@ -23,6 +23,7 @@ import REST.RESTService;
 public class Server {
 	
 	final int PORT = 23111;
+	final String BASE_URI = "/ruk/api/";
 	
 	Hashtable<String,CommandHandlerBase> _commandHandlers = new Hashtable<String, CommandHandlerBase>();	
 	boolean _quit = false;
@@ -47,7 +48,7 @@ public class Server {
 	}
 	
 	private void registerCommandHandler(CommandHandlerBase handler) {
-		_commandHandlers.put(handler.getURI(), handler);
+		_commandHandlers.put(BASE_URI + handler.getURI(), handler);
 	}
 	
 	private void removeCommandHandler(String uri) {
