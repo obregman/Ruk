@@ -15,8 +15,8 @@ $(document).ready(function(){
 		
 	     $.ajax({ 
 	         type: "post",
-	         dataType: "json",
-	         url: "http://127.0.0.1:23111/ruk/ops/add-script",
+	         dataType: "utf16",
+	         url: "http://localhost:23111/ruk/api/add-script",
 	         success: function(data){        
 	            alert(data); 
 	         }
