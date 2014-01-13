@@ -7,6 +7,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import scripts.ApiScript;
+import scripts.ImmediateScript;
 import scripts.Script;
 import server.RESTServer;
 import commandHandlers.AddScriptCommandHandler;
@@ -116,7 +117,7 @@ public class Server {
 			dynamicCH.setApiObject((ApiScript)script);
 			registerCommandHandler(dynamicCH);
 			_workspace.addApi((ApiScript)script);
-		}
+		}		
 	}
 
 }

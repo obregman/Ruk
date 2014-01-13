@@ -56,10 +56,13 @@ public class ApiScript extends Script {
 		// Run do
 		Context doResult = parser.execute(_do);
 		if( doResult.errorState() ) {
-			return ScriptRunResult.failed("{'foo':'bar'}");
+			if( doResult.getErrors().size() > 0 )
+				return ScriptRunResult.failed(doResult.getErrors().get(0));
+			else
+				return ScriptRunResult.failed("Unspecified error");
 		}
 		else
-			return ScriptRunResult.succeeded(String.format("{'return':'%s'}", doResult.getReturnValue().toString()));
+			return ScriptRunResult.succeeded(doResult.getReturnValue().toString());
 	}
 	
 	@Override

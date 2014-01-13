@@ -12,11 +12,29 @@
 $(document).ready(function(){
 	  		  
 	$('#run').click(function(){
-		
-		$.post( "http://localhost:23111/ruk/api/status", 
-		function( data ) {
-			$( "#result" ).html( data );
+				
+		var input = "immediate {\n" + 
+			"do {\n" + $('#code').val() + "\n" + 
+			"}\n" +
+			"}"; 
+			
+		$.ajax({
+			  type: "POST",
+			  url: "http://localhost:23111/ruk/api/add-script",
+			  data: input,
+			  success: function(data) {
+				  $('#result').val(data);
+			  },
+			  error: function(error) {
+				  $('#result').val("Error: " + error);
+			  }
 		});
+		
+	});
+	
+	$('#clear').click(function(){
+		$('#code').val("");
+		$('#result').val("");
 	});
 	  
 });
@@ -24,13 +42,10 @@ $(document).ready(function(){
 </head>
 <body>
 
-<form>
-	<textarea rows="6" cols="60" id="code"></textarea><p>
-	<textarea rows="6" cols="60" id="result"></textarea><p>
-	<button id="run">Run</button>
-	
-	<p><div id="result">-----------------</div>
-</form>
+<textarea rows="6" cols="60" id="code"></textarea><p>
+<textarea rows="6" cols="60" id="result"></textarea><p>
+<button id="run">Run</button>
+<button id="clear">Clear</button>
 
 </body>
 </html>
