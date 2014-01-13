@@ -11,16 +11,12 @@
 
 $(document).ready(function(){
 	  		  
-	$('#run').click(function(){ 
+	$('#run').click(function(){
 		
-	     $.ajax({ 
-	         type: "post",
-	         dataType: "utf16",
-	         url: "http://localhost:23111/ruk/api/add-script",
-	         success: function(data){        
-	            alert(data); 
-	         }
-	     });
+		$.post( "http://localhost:23111/ruk/api/status", 
+		function( data ) {
+			$( "#result" ).html( data );
+		});
 	});
 	  
 });
@@ -32,6 +28,8 @@ $(document).ready(function(){
 	<textarea rows="6" cols="60" id="code"></textarea><p>
 	<textarea rows="6" cols="60" id="result"></textarea><p>
 	<button id="run">Run</button>
+	
+	<p><div id="result">-----------------</div>
 </form>
 
 </body>
