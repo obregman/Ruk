@@ -31,7 +31,7 @@ public class ApiScript extends Script {
 		if( inputBlock == null )
 			return false;
 		
-		if( inputBlock != null ) {
+		if( inputBlock != null && inputBlock.innerElements.size() > 0 && inputBlock.innerElements.get(0).innerText != null) {
 			String[] params = inputBlock.innerElements.get(0).innerText.split(",");
 			for (int i = 0; i < params.length; i++) {
 				_inputParameters.add(params[i]);

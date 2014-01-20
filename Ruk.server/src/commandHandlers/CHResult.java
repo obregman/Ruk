@@ -31,9 +31,9 @@ public class CHResult {
 	public String getJsonResponse() {
 		
 		if ( _response != null && _response.length() > 0 && _response.charAt(0) == '{')
-			return "{'success':'" + (_status == ResultStatus.Success) + "', 'response':" + _response + "}";
+			return "{\"success\":\"" + (_status == ResultStatus.Success) + "\", \"response\":" + _response + "}";
 		else
-			return "{'success':'" + (_status == ResultStatus.Success) + "', 'response':'" + _response + "'}";
+			return "{\"success\":\"" + (_status == ResultStatus.Success) + "\", \"response\":\"" + _response + "\"}";
 	}
 	
 	public void setRepsonse(String response) {

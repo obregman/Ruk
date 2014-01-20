@@ -10,24 +10,45 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
+	
+	$("#api").click(function() {
+		$("#code").val("api noname {\n input {\n }\n\n do {\n }\n }");	
+	});
+	
+	$("#immediate").click(function() {
+		$("#code").val("immediate {\n do {\n }\n }");	
+	});
 	  		  
 	$('#run').click(function(){
+		
+		$('#result').val("");		
 				
-		var input = "immediate {\n" + 
-			"do {\n" + $('#code').val() + "\n" + 
-			"}\n" +
-			"}"; 
+		var input = $('#code').val()
 			
-		$.ajax({
-			  type: "POST",
-			  url: "http://localhost:23111/ruk/api/add-script",
-			  data: input,
-			  success: function(data) {
-				  $('#result').val(data);
-			  },
-			  error: function(error) {
-				  $('#result').val("Error: " + error);
-			  }
+		request = $.ajax({			
+			type: "POST",
+			url: "http://localhost:23111/ruk/api/add-script",
+			data: input,		  
+			dataType: "json",
+			cache: false,
+			success: function(response) {
+				var resultText = "";
+				success = response["success"];
+				if( success == "true" ) {
+					$("#status").text("Success");
+					$("#result").val(response["response"]);
+				}
+				else
+					resultText += "Fail\r\n";					
+				
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				$("#status").text("Failed");
+				console.error(
+						"The following error occured: "+
+						textStatus, errorThrown
+				);
+			 }
 		});
 		
 	});
@@ -41,8 +62,13 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-
+<button id="api">API</button>
+<button id="immediate">Immediate</button>
+<br>
+Input:<br>
 <textarea rows="6" cols="60" id="code"></textarea><p>
+Response: 
+<div id="status"></div><br>
 <textarea rows="6" cols="60" id="result"></textarea><p>
 <button id="run">Run</button>
 <button id="clear">Clear</button>

@@ -6,7 +6,7 @@ public class HTTPResponse {
 	
 	public boolean succeess;
 	public int code;
-	public String contentType = "application/json";
+	public String contentType = "json";
 	public String data;	
 	
 	public HTTPResponse() {
@@ -43,7 +43,7 @@ public class HTTPResponse {
 		sb.append(HTTPVER);
 		
 		if( succeess )
-			sb.append("200 OK");
+			sb.append("HTTP/1.1 200 OK");
 		else
 			sb.append("400 Bad request");
 			
@@ -55,8 +55,13 @@ public class HTTPResponse {
 		// Content-length
 		if( data == null )
 			sb.append("Content-Length: 0\r\n");
-		else
-			sb.append("Content-Length: " + data.length() + "\r\n");
+		else {
+			int len = data.length();
+			sb.append("Content-Length: " + len + "\r\n");
+		}
+		
+		sb.append("Access-Control-Allow-Origin: *\r\n");
+		sb.append("Cache-Control: no-cache\r\n");
 		
 		sb.append("\r\n" + data);
 		
