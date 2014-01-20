@@ -7,6 +7,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import scripts.ApiScript;
+import scripts.ImmediateScript;
 import scripts.Script;
 import server.RESTServer;
 import commandHandlers.AddScriptCommandHandler;
@@ -23,6 +24,7 @@ import REST.RESTService;
 public class Server {
 	
 	final int PORT = 23111;
+	final String BASE_URI = "/ruk/api/";
 	
 	Hashtable<String,CommandHandlerBase> _commandHandlers = new Hashtable<String, CommandHandlerBase>();	
 	boolean _quit = false;
@@ -47,7 +49,7 @@ public class Server {
 	}
 	
 	private void registerCommandHandler(CommandHandlerBase handler) {
-		_commandHandlers.put(handler.getURI(), handler);
+		_commandHandlers.put(BASE_URI + handler.getURI(), handler);
 	}
 	
 	private void removeCommandHandler(String uri) {
@@ -115,7 +117,7 @@ public class Server {
 			dynamicCH.setApiObject((ApiScript)script);
 			registerCommandHandler(dynamicCH);
 			_workspace.addApi((ApiScript)script);
-		}
+		}		
 	}
 
 }
