@@ -9,7 +9,7 @@ import HTTP.HTTPResponse;
 
 public class GetStatusHandler extends CommandHandlerBase {
 	
-	final String SERVICE_URI = "/ruk/ops/status";
+	final String SERVICE_URI = "status";
 	
 	public GetStatusHandler(Server server) {
 		super(server);

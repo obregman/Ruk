@@ -7,7 +7,7 @@ import server.Server;
 
 public class RemoveScriptCommandHandler extends CommandHandlerBase {
 	
-	final String SERVICE_URI = "/ruk/ops/remove_script";
+	final String SERVICE_URI = "remove_script";
 	
 	ApiScript _apiScript = new ApiScript();
 	

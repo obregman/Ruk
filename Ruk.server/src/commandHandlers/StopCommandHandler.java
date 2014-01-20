@@ -6,7 +6,7 @@ import server.Server;
 
 public class StopCommandHandler extends CommandHandlerBase {
 	
-	final String SERVICE_URI = "/ruk/ops/stop";
+	final String SERVICE_URI = "stop";
 	
 	public StopCommandHandler(Server server) {
 		super(server);

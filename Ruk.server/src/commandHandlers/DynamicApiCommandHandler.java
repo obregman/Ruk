@@ -15,7 +15,7 @@ public class DynamicApiCommandHandler extends CommandHandlerBase {
 	}
 	
 	public void setName(String name) {
-		_uri = "/ruk/ops/" + name;
+		_uri = name;
 	}
 	
 	public void setApiObject(ApiScript script) {

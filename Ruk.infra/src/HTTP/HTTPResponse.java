@@ -6,7 +6,7 @@ public class HTTPResponse {
 	
 	public boolean succeess;
 	public int code;
-	public String contentType = " text/xml; charset=utf-8";
+	public String contentType = "application/json";
 	public String data;	
 	
 	public HTTPResponse() {
@@ -43,9 +43,9 @@ public class HTTPResponse {
 		sb.append(HTTPVER);
 		
 		if( succeess )
-			sb.append(" OK 200");
+			sb.append("200 OK");
 		else
-			sb.append(" Bad request 400");
+			sb.append("400 Bad request");
 			
 		sb.append("\r\n");
 		

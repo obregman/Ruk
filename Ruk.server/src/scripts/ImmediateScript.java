@@ -8,15 +8,15 @@ import core.Context;
 import core.ParsedCode;
 import scriptParsers.ScriptBlock;
 import scriptParsers.ScriptTree;
-import scripts.ApiScript;
+import scripts.ImmediateScript;
 
-public class ApiScript extends Script {
+public class ImmediateScript extends Script {
 	
 	List<String> _inputParameters = new ArrayList<String>();
 	ParsedCode _do;
 	
-	public ApiScript() {
-		super("api");
+	public ImmediateScript() {
+		super("immediate");
 	}
 	
 	@Override
@@ -25,18 +25,6 @@ public class ApiScript extends Script {
 		CodeParser parser = new CodeParser();
 		
 		_name = tree.getName();
-		
-		
-		ScriptBlock inputBlock = tree.getRoot().findBlock("input");
-		if( inputBlock == null )
-			return false;
-		
-		if( inputBlock != null ) {
-			String[] params = inputBlock.innerElements.get(0).innerText.split(",");
-			for (int i = 0; i < params.length; i++) {
-				_inputParameters.add(params[i]);
-			}
-		}
 		
 		ScriptBlock doBlock = tree.getRoot().findBlock("do");
 		if( doBlock == null )
@@ -56,10 +44,10 @@ public class ApiScript extends Script {
 		// Run do
 		Context doResult = parser.execute(_do);
 		if( doResult.errorState() ) {
+			String error = "N/A";
 			if( doResult.getErrors().size() > 0 )
-				return ScriptRunResult.failed(doResult.getErrors().get(0));
-			else
-				return ScriptRunResult.failed("Unspecified error");
+				error = doResult.getErrors().get(0);
+			return ScriptRunResult.failed(error);
 		}
 		else
 			return ScriptRunResult.succeeded(doResult.getReturnValue().toString());
@@ -67,7 +55,7 @@ public class ApiScript extends Script {
 	
 	@Override
 	public Script getObject() {
-		return new ApiScript();
+		return new ImmediateScript();
 	}
 	
 	@Override
